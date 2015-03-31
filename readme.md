@@ -20,7 +20,7 @@ Here's a sample dashboard https://gngrwzrd.com/soccer/MyApp/dashboard.php
 
 ## Setup ##
 
-For each application you want to use soccerapp for, you just copy the entier soccerapp folder to a new foler, then bootstrap it.
+For each application you'd like to have soccerapp setup for. You copy the entire soccerapp folder to a new foler, then bootstrap it.
 
     cp soccerapp mynewapp
     cd mynewapp
