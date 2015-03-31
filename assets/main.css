@@ -1,0 +1,135 @@
+body {
+	font-family:sans-serif;
+	margin:0;
+	padding:0;
+}
+
+a {color:#51535B;}
+
+table {width:100%;margin:0;padding:0;}
+
+pre.session{display:none;}
+
+.center {text-align:center;}
+
+.desktop{color:red;font-size:24px;}
+
+.mobile{display:none;}
+
+.rederror {
+	border:solid 1px red;
+}
+
+.content {
+	margin:0;
+	padding:0;
+	margin-bottom:20px;
+}
+
+.section {
+	border-top:solid 1px #BBB;
+	border-left:solid 1px #BBB;
+	border-right:solid 1px #BBB;
+	margin-top:20px;
+	margin-left:50px;
+	margin-right:50px;
+}
+
+.sectionHeader {
+	font-size:22px;
+	padding:20px;
+	font-weight:bold;
+	background-color:#DDD;
+	border-bottom:solid 1px #CCC;
+}
+
+.sectionHeaderIcon {
+	border-radius:6px;
+	vertical-align:middle;
+	margin-top:-3px;
+}
+
+.sectionHeaderAppBundleId {
+	font-size:10px;
+	font-color:gray;
+	font-weight:normal;
+}
+
+.sectionHeader table tr td {
+	font-size:22px;
+	font-weight:bold;
+	background-color:#DDD;
+}
+
+.sectionMenu {
+	padding:10px 4px 8px 18px;
+	background-color:#EBF0F3;
+	border-bottom:solid 1px #CCC;
+	font-size:12px;
+}
+
+.sectionRow {
+	padding:20px;
+	padding-left:20px;
+	background-color:#F3F3F3;
+	border-bottom:solid 1px #CCC;
+	color:#51535B;
+}
+
+.sectionRow td {
+	color:#51535B;
+	font-size:12px;
+}
+
+.sectionFooter {
+	background-color:white;
+	border-bottom:solid 1px #CCC;
+	padding:5px;
+	padding-left:20px;
+	font-size:12px;
+	color:#51535B;
+	margin-top:3px;
+}
+
+.desktop .sectionRow {
+	color:red;
+}
+
+.rnotes {
+	margin-top:20px;
+}
+
+.rnotes a {
+	font-size:12px;
+}
+
+.footer {
+	font-size:12px;
+	width:200px;
+	text-align:center;
+	margin:0 auto;
+	margin-bottom:50px;
+	color:#BBB;
+}
+
+.footer a {
+	color:#bbb;
+}
+
+/* Portrait */
+@media only screen 
+	and (min-device-width: 320px) 
+	and (max-device-width: 480px)
+	and (-webkit-min-device-pixel-ratio: 2)
+	and (orientation: portrait) {
+
+.section {
+	border-top:solid 1px #BBB;
+	border-left:solid 1px #BBB;
+	border-right:solid 1px #BBB;
+	margin-top:20px;
+	margin-left:10px;
+	margin-right:10px;
+}
+
+} /* End Portrait */

@@ -1,0 +1,2 @@
+deviceIdentifier	deviceName
+bab9ecb7cc2cfbd2d3912e2a892faccc176937f9	iPhone7,2
