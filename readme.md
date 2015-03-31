@@ -14,6 +14,10 @@ SoccerApp is a standalone PHP application for distributing and managing an iOS a
 * Export devices for Apple Member Center
 * Manually add devices
 
+## Dashboard ##
+
+Here's a sample dashboard https://gngrwzrd.com/soccer/MyApp/dashboard.php
+
 ## Setup ##
 
 For each application you want to use soccerapp for, you just copy the entier soccerapp folder to a new foler, then bootstrap it.
