@@ -4,15 +4,15 @@ SoccerApp is a standalone PHP application for distributing and managing an iOS a
 
 ## Features ##
 
--Manages a single app
--Manages multiple versions
--Register new devices
--Track which users have installed versions
--Install latest version or older versions
--Accept crash logs
--Delete crash logs
--Export devices for Apple Member Center
--Manually add devices
+* Manages a single app
+* Manages multiple versions
+* Register new devices
+* Track which users have installed versions
+* Install latest version or older versions
+* Accept crash logs
+* Delete crash logs
+* Export devices for Apple Member Center
+* Manually add devices
 
 ## Setup ##
 
@@ -30,9 +30,8 @@ Registering devices and installing applications are public actions assuming the 
 
 You should password protect these files and directories:
 
--dashboard.php
--php/
--templates/
+* dashboard.php
+* php/
 
 ## TODO ##
 
