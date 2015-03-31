@@ -1,6 +1,6 @@
 ## Soccer App ##
 
-SoccerApp is a standalone PHP application for distribution an iOS application.
+SoccerApp is a standalone PHP application for distributing and managing an iOS application.
 
 ## Features ##
 
