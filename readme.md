@@ -24,7 +24,7 @@ For each application you'd like to have soccerapp setup for. You copy the entire
 
     cp soccerapp mynewapp
     cd mynewapp
-    python bootstrap --name=MyApplication --bundlid=com.myapp.MyApp --icon=myicon.png
+    python bootstrap.py --name=MyApplication --bundlid=com.myapp.MyApp --icon=myicon.png
 
 That's it - upload "mynewapp" to a server with PHP installed.
 
