@@ -10,6 +10,8 @@ table {width:100%;margin:0;padding:0;}
 
 pre.session{display:none;}
 
+form {margin:0; padding:0;}
+
 .center {text-align:center;}
 
 .desktop{color:red;font-size:24px;}
@@ -28,8 +30,8 @@ pre.session{display:none;}
 
 .section {
 	border-top:solid 1px #BBB;
-	border-left:solid 1px #BBB;
-	border-right:solid 1px #BBB;
+	border-left:solid 1px #CCC;
+	border-right:solid 1px #CCC;
 	margin-top:20px;
 	margin-left:50px;
 	margin-right:50px;
@@ -69,11 +71,13 @@ pre.session{display:none;}
 }
 
 .sectionRow {
-	padding:20px;
+	padding:10px;
+	padding-right:20px;
 	padding-left:20px;
 	background-color:#F3F3F3;
 	border-bottom:solid 1px #CCC;
 	color:#51535B;
+	font-size:12px;
 }
 
 .sectionRow td {
@@ -81,18 +85,38 @@ pre.session{display:none;}
 	font-size:12px;
 }
 
+.sectionRowForm td.label {
+	width:100px;
+}
+
+.sectionRowForm td input[type='text'] {
+	width:100%;
+	font-size:16px;
+	padding:5px;
+}
+
+.sectionRowForm input[type='submit'] {
+	width:100%;
+}
+
+.sectionRowForm td textarea {
+	width:100%;
+	height:400px;
+}
+
 .sectionFooter {
 	background-color:white;
 	border-bottom:solid 1px #CCC;
 	padding:5px;
 	padding-left:20px;
-	font-size:12px;
+	font-size:10px;
 	color:#51535B;
 	margin-top:3px;
 }
 
 .desktop .sectionRow {
 	color:red;
+	font-size:16px;
 }
 
 .rnotes {

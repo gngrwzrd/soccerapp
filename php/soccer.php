@@ -146,7 +146,7 @@ class Soccer {
 		fclose($handle);
 	}
 	
-	function getRequestVar($var,$default) {
+	function getRequestVar($var,$default=False) {
 		if(isset($_REQUEST[$var])) {
 			return $_REQUEST[$var];
 		}
@@ -155,6 +155,11 @@ class Soccer {
 
 	function getAllVersions() {
 		$path = $this->joinPaths(array($this->basePath,"versions"));
+
+		if(!file_exists($path)) {
+			return array();
+		}
+
 		$rawfiles = scandir($path);
 		$allVersions = array();
 		
@@ -220,6 +225,11 @@ class Soccer {
 			switch ($action) {
 				case 'install':
 					return $this->installApplication();
+				case 'newversion':
+					return $this->newVersion();
+				case 'submitnewversion':
+					return $this->submitNewVersion();
+					break;
 				case 'crashintegrate':
 					return $this->integrateCrashReports();
 				default:
@@ -329,7 +339,7 @@ class Soccer {
 		$path = $this->joinPaths(array($this->crashPath,$uuid . ".txt"));
 		$this->writeFileContent($path,$data);
 	}
-
+	
 	function dashboardIndex() {
 		$versions = $this->getAllVersions();
 		$latestVersion = $versions[0];
@@ -340,17 +350,36 @@ class Soccer {
 		$savant->crashes = $crashes;
 		$savant->crashLink = $this->joinPaths(array($this->baseURL,"crash"));
 		$savant->recruitLink = $this->baseURL;
-		$savant->installLink = $this->baseURL . "?a=install&v" . $latestVersion->uuid;
+		$savant->installLink = $this->baseURL . "?a=install&v=" . $latestVersion->uuid;
 		$result = $savant->fetch("templates/actions.dashboard.index.php");
 		return $result;
 	}
-
+	
 	function integrateCrashReports() {
 		$savant = new Savant3();
 		$this->setMetaDataOnSavant($savant);
 		$savant->crashURL = $this->joinPaths(array($this->baseURL,"crash"));
 		$result = $savant->fetch("templates/actions.dashboard.crashintegrate.php");
-		return $result;	
+		return $result;
+	}
+
+	function newVersion() {
+		$savant = new Savant3();
+		$this->setMetaDataOnSavant($savant);
+		$savant->dashboardLink = $this->dashboardLink;
+		$result = $savant->fetch("templates/actions.dashboard.newversion.php");
+		return $result;
+	}
+
+	function submitNewVersion() {
+		$file = $_FILES['ipaFile'];
+		$tmpfile = $file['tmp_name'];
+		$ipaName = $file['name'];
+		$uuid = UUID::v4();
+		$path = $this->joinPaths(array($this->basePath,"versions",$uuid));	
+		mkdir($path);
+		$path = $this->joinPaths(array($path,$ipaName));
+		copy($tmpfile,$path);
 	}
 }
 ?>

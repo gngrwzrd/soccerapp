@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="content">
+	
 	<!-- main header -->
 	<div class="sectionHeader">
 		<table cellspacing=0 cellpadding=0><tr>
@@ -25,57 +26,68 @@
 	<div class="sectionMenu">
 		<a href="<?php echo $this->recruitLink; ?>">Recruit Users</a> &nbsp;|&nbsp; <a href="<?php echo $this->installLink; ?>">Install Latest</a>
 	</div>
-
+	
 	<!-- app versions -->
 	<div class="section">
 		<div class="sectionHeader">
 			Versions
 		</div>
 		<div class="sectionMenu">
-			<a href="">Upload New Version</a>
+			<a href="?a=newversion">Upload New Version</a>
 		</div>
-		<?php foreach($this->versions as $version) { ?>
+		<?php if(count($this->versions) > 0) { ?>
+			<?php foreach($this->versions as $version) { ?>
+				<div class="sectionRow">
+					<table cellpadding="0" cellspacing="0" class="item"><tr>
+					<td>
+						<a href="?a=install&v=<?php echo urlencode($version->uuid); ?>"><?php echo $version->name; ?></a>
+					</td>
+					<td align="right">
+						<?php echo $version->datestring; ?> &nbsp;|&nbsp;
+						<a href="">Delete</a>
+					</td>
+					</tr></table>
+				</div>
+			<?php } ?>
+		<?php } else { ?>
 			<div class="sectionRow">
-				<table cellpadding="0" cellspacing="0" class="item"><tr>
-				<td>
-					<a href="?a=install&v=<?php echo urlencode($version->uuid); ?>"><?php echo $version->name; ?></a>
-				</td>
-				<td align="right">
-					<?php echo $version->datestring; ?> &nbsp;|&nbsp;
-					<a href="">Delete</a>
-				</td>
-				</tr></table>
+				No versions
 			</div>
 		<?php } ?>
 	</div>
-
+	
 	<!-- crash logs -->
 	<div class="section">
 		<div class="sectionHeader">
-			<?php if( count($this->crashes) > 0) { ?>
-				Crash Logs (<?php echo count($this->crashes); ?>)
-			<?php } else { ?>
-				Crash Logs
-			<?php } ?>
+			Crash Logs
 		</div>
-		<?php foreach($this->crashes as $crash) {?>
-		<div class="sectionRow">
-			<table cellpadding="0" cellspacing="0"><tr>
-			<td>
-				<a href="<?php echo $this->crashLink . '/' . $crash->name; ?>"><?php echo substr($crash->name,0,18); ?></a>
-			</td>
-			<td align="right">
-				<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
-				<a href="">Delete</a>
-			</td></tr></table>
-		</div>
-		<?php } ?>
 		
+		<?php if( count($this->crashes)) { ?>
+			<?php foreach($this->crashes as $crash) {?>
+			<div class="sectionRow">
+				<table cellpadding="0" cellspacing="0"><tr>
+				<td>
+					<a href="<?php echo $this->crashLink . '/' . $crash->name; ?>"><?php echo substr($crash->name,0,18); ?></a>
+				</td>
+				<td align="right">
+					<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
+					<a href="">Delete</a>
+				</td></tr></table>
+			</div>
+			<?php } ?>
+		<?php } else { ?>
+			<div class="sectionRow">
+				No crash logs
+			</div>
+		<?php } ?>
+
 		<div class="sectionFooter">
 			How to <a href="?a=crashintegrate">integrate crash reports</a> &nbsp;with&nbsp; <a href="https://www.plcrashreporter.org/" target="_blank">plcrashreporter</a>
+			&nbsp;|&nbsp;
+			<a href="?a=symbolicate">How to Symbolicate</a>
 		</div>
 	</div>
-
+	
 	<!-- devices -->
 	<div class="section">
 		<div class="sectionHeader">
@@ -87,7 +99,7 @@
 		<div class="sectionRow">
 		</div>
 	</div>
-
+	
 	<!-- statistics -->
 	<div class="section">
 		<div class="sectionHeader">
@@ -100,7 +112,7 @@
 </div>
 
 <div class="footer">
-	created with <a href="">soccerapp</a>
+	created with <a href="http://">soccerapp</a>
 </div>
 </body>
 </html>
