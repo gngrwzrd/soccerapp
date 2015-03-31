@@ -37,6 +37,10 @@ You should password protect these files and directories:
 * dashboard.php
 * php/
 
+## SSL ##
+
+Apple requires SSL to install applications. Your server will need SSL and HTTPS available.
+
 ## TODO ##
 
 -Need to get user track in  place.
