@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>Crash Reporting Integration for <?php echo $this->applicationName; ?></title>
+<title>Install <?php echo $this->applicationName; ?></title>
 <link rel="stylesheet" href="assets/main.css"/>
 <link rel="stylesheet" href="assets/buttons.css"/>
 <script type="text/javascript" src="assets/jquery.min.js"></script>
@@ -21,15 +21,16 @@
 		</td>
 		</tr></table>
 	</div>
-	<div class="sectionMenu">
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>">Dashboard</a>
-	</div>
+	
 	<div class="section">
-		<div class="sectionRow">
-			Add <a href="https://www.plcrashreporter.org">PLCrashReporter</a> framework to your project.
+		<div class="sectionHeader">
+			iOS
 		</div>
 	</div>
 	<div class="section">
+		<div class="sectionRow">
+			How do I integrate crash reports?
+		</div>
 		<div class="sectionRow">
 			<pre>
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {

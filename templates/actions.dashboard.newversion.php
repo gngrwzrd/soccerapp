@@ -11,7 +11,7 @@
 <div class="content">
 	
 	<!-- main header -->
-	<div class="sectionHeader">
+	<div class="sectionHeader topHeader">
 		<table cellspacing=0 cellpadding=0><tr>
 		<td width="75">
 			<img class="sectionHeaderIcon" src="assets/icon.png" width="50" height="50" /></td>
@@ -42,11 +42,7 @@
 				<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td class="label"></td>
-					<td>
-						<input type="radio" name="syntax" value="Markdown" /> Markdown
-						<input type="radio" name="syntax" value="Markdown" /> Plain Text
-						<input type="radio" name="syntax" value="Markdown" /> Other Syntax
-					</td>
+					<td><span class="" style="font-size:10px;">(Markdown supported)</span></td>
 				</tr>
 				</table>
 				<div style="height:10px;" ></div>

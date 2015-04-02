@@ -4,7 +4,7 @@
         <key>PayloadContent</key>
         <dict>
             <key>URL</key>
-            <string>http://imac.local?a=payload</string>
+            <string>http://imac.local?a=payload&amp;u=6259B93D-1FB1-4A42-B877-15E87D88F7AE</string>
             <key>DeviceAttributes</key>
             <array>
                 <string>IMEI</string>

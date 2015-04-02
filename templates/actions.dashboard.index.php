@@ -11,7 +11,7 @@
 <div class="content">
 	
 	<!-- main header -->
-	<div class="sectionHeader">
+	<div class="sectionHeader topHeader">
 		<table cellspacing=0 cellpadding=0><tr>
 		<td width="75">
 			<img class="sectionHeaderIcon" src="assets/icon.png" width="50" height="50" /></td>
@@ -24,13 +24,22 @@
 		</tr></table>
 	</div>
 	<div class="sectionMenu">
+		<?php if ($this->filter && $this->filter != "") { ?>
+			<a href="<?php echo $this->dashboardLink; ?>">Dashboard</a>
+		<?php } ?>
+
+		<?php if(!$this->filter || $this->filter == "") {?>
 		<a href="<?php echo $this->recruitLink; ?>">Recruit Users</a> &nbsp;|&nbsp; <a href="<?php echo $this->installLink; ?>">Install Latest</a>
+		<?php } ?>
+
+		&nbsp;|&nbsp; <a href="?a=faq">FAQ</a>
 	</div>
 	
+	<?php if(!$this->filter || $this->filter == "onlyversions") { ?>
 	<!-- app versions -->
 	<div class="section">
 		<div class="sectionHeader">
-			Versions
+			<a href="?a=onlyversions">Versions</a>
 		</div>
 		<div class="sectionMenu">
 			<a href="?a=newversion">Upload New Version</a>
@@ -39,12 +48,13 @@
 			<?php foreach($this->versions as $version) { ?>
 				<div class="sectionRow">
 					<table cellpadding="0" cellspacing="0" class="item"><tr>
-					<td>
+					<td class="sectionRowTitle">
 						<a href="?a=install&v=<?php echo urlencode($version->uuid); ?>"><?php echo $version->name; ?></a>
 					</td>
 					<td align="right">
 						<?php echo $version->datestring; ?> &nbsp;|&nbsp;
-						<a href="">Delete</a>
+						<a href="?a=releasenotes&v=<?php echo $version->uuid; ?>">Notes</a> &nbsp;|&nbsp;
+						<a class="delete" href="?a=delversion&filter=<?php echo $this->filter; ?>&v=<?php echo $version->uuid;?>" onclick="return confirmDelete();">Delete</a>
 					</td>
 					</tr></table>
 				</div>
@@ -55,43 +65,52 @@
 			</div>
 		<?php } ?>
 	</div>
+	<?php } ?>
 	
+	<?php if(!$this->filter || $this->filter == "onlycrashes") { ?>
 	<!-- crash logs -->
 	<div class="section">
 		<div class="sectionHeader">
-			Crash Logs
+			<a href="?a=onlycrashes">Crash Logs</a>
 		</div>
-		
-		<?php if( count($this->crashes)) { ?>
-			<?php foreach($this->crashes as $crash) {?>
-			<div class="sectionRow">
-				<table cellpadding="0" cellspacing="0"><tr>
-				<td>
-					<a href="<?php echo $this->crashLink . '/' . $crash->name; ?>"><?php echo substr($crash->name,0,18); ?></a>
-				</td>
-				<td align="right">
-					<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
-					<a href="">Delete</a>
-				</td></tr></table>
-			</div>
+		<?php if( count($this->crashGroups) > 0) { ?>
+			<?php foreach($this->crashGroups as $group) {?>
+				<div class="sectionRow groupTitle">
+					<table cellspacing="0" cellspacing="0"><tr>
+					<td>
+						<a href="">
+							<span class="groupTitleText">Version <?php echo $group->groupLabel; ?></span>
+						</a>
+					</td>
+					<td align="right"><span class="groupTitleLinks"><a href="">Download all</a></span></td>
+					</tr></table>
+				</div>
+				<?php foreach($group->crashes as $crash) {?>
+					<div class="sectionGroupRow">
+						<table cellpadding="0" cellspacing="0"><tr>
+						<td class="sectionRowTitle">
+							<a href="<?php echo $this->crashLink . '/' . $group->groupLabel . '/' . $crash->name; ?>"><?php echo substr($crash->name,0,18); ?></a>
+						</td>
+						<td align="right">
+							<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
+							<a class="delete" href="?a=delcrash&filter=<?php echo $this->filter; ?>&c=<?php echo $crash->name?>&v=<?php echo $group->groupLabel; ?>" onclick="return confirmDelete();">Delete</a>
+						</td></tr></table>
+					</div>
+				<?php } ?>
 			<?php } ?>
 		<?php } else { ?>
 			<div class="sectionRow">
 				No crash logs
 			</div>
 		<?php } ?>
-
-		<div class="sectionFooter">
-			How to <a href="?a=crashintegrate">integrate crash reports</a> &nbsp;with&nbsp; <a href="https://www.plcrashreporter.org/" target="_blank">plcrashreporter</a>
-			&nbsp;|&nbsp;
-			<a href="?a=symbolicate">How to Symbolicate</a>
-		</div>
 	</div>
+	<?php } ?>
 	
+	<?php if(!$this->filter || $this->filter == "onlydevices") { ?>
 	<!-- devices -->
 	<div class="section">
 		<div class="sectionHeader">
-			Devices
+			<a href="?a=onlydevices">Devices</a>
 		</div>
 		<div class="sectionMenu">
 			<a href="">Export Devices</a> &nbsp;|&nbsp; <a href="">Add A Device</a>
@@ -99,20 +118,23 @@
 		<div class="sectionRow">
 		</div>
 	</div>
+	<?php } ?>
 	
+	<?php if(!$this->filter || $this->filter == "onlystats") { ?>
 	<!-- statistics -->
 	<div class="section">
 		<div class="sectionHeader">
-			Statistics
+			<a href="?a=onlystats">Statistics</a>
 		</div>
 		<div class="sectionRow">
 
 		</div>
 	</div>
+	<?php } ?>
 </div>
 
 <div class="footer">
-	created with <a href="http://">soccerapp</a>
+	created with <a href="http://github.com/gngrwzrd/soccerapp">soccerapp</a>
 </div>
 </body>
 </html>

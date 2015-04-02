@@ -1,0 +1,4 @@
+-finish registration flow, need to do something with device and user info
+-devices
+-users
+-csrf - save token locally with IP address in it, token comes back, validate IP address.

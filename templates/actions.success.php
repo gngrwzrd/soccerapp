@@ -21,17 +21,17 @@
 		</td>
 		</tr></table>
 	</div>
-	<div class="desktop">
-		<div class="sectionRow center">
-			Open this page on your iOS device.
+	<div class="section">
+		<div class="desktop">
+			<div class="sectionRow center">
+				Open this page on your iOS device.
+			</div>
 		</div>
-	</div>
-	<div class="mobile">
-		<div class="sectionRow center">
-			<small>
-				<p><strong>Success</strong>!</p>
+		<div class="mobile">
+			<div class="sectionRow center">
+				<p><strong>Success!</strong></p>
 				<p>Thanks for registering. You'll be sent another link with installation instructions.</p>
-			</small>
+			</div>
 		</div>
 	</div>
 </div>

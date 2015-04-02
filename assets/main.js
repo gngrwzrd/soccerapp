@@ -14,3 +14,8 @@ function onInstall() {
 		$(".gohome").show();
 	},2000);
 }
+
+function confirmDelete() {
+	var result = confirm("Are you sure?");
+	return result;
+}

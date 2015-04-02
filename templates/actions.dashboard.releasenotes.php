@@ -23,30 +23,8 @@
 	</div>
 	<div class="section">
 		<div class="sectionHeader">
-			<?php echo $this->versionName; ?>
+			<?php echo $this->versionName; ?> Release Notes
 		</div>
-		
-		<?php if(!$this->debug) { ?>
-		<div class="desktop">
-			<div class="sectionRow center">
-				Open this page on your iOS device.
-			</div>
-		</div>
-		<?php } ?>
-		
-		<?php if(!$this->debug) { ?>
-			<div class="mobile">
-		<?php } ?>
-				<div class="sectionMenu">
-					<script>var url = "itms-services://?action=download-manifest&amp;&url=<?php echo $this->applicationPlist; ?>";</script>
-					<input type="button" class="button black" style="width:100%" onclick="window.location=url;" value="Tap to Install" />
-					<!--<a class="button black" style="" onclick="" href="itms-services://?action=download-manifest&amp;url=<?php echo $this->applicationPlist; ?>">
-					Tap to Install</a>-->
-				</div>
-		<?php if(!$this->debug) { ?>
-			</div>
-		<?php } ?>
-		
 		<div class="sectionRow releaseNotes">
 <?php echo $this->releaseNotes; ?>
 		</div>

@@ -1,0 +1,25 @@
+## Please delete the old app before installing
+
+**iOS App Updates:**
+
+* Season / Episode continuity.
+* Playing a "Favorites" episode is exempt from season/episode continuity logic.
+* Now Playing Overlay - it hides after 10 seconds if you pause.
+* New Season Badge and Labels in proper places – Show Tile, Season Tile, in parent zone on Show Tile, and the drop down buttons
+* New Season Badge will not show for first time users.
+* Season select (carousel view) adjustments for iPhone 4(s) and 5.
+* First play "Did you know?" alert
+* Added alert when trying to play an episode you have to purchase.
+* Added offline messaging in store under the Available Offline label
+* Added "Purchase Season for" to the big season purchase button
+* Parent Gate header updated
+* Parent Zone title update d
+* Support button in Parent Zone
+* Share with Friends button in Parent Zone
+* Added cancel and purchase button to alert in drawer.
+
+**CMS Updates:**
+
+* Fixed season typo
+* Moved fav thumb to season level
+* Took out price, price is now only coming from iTunes Connect.

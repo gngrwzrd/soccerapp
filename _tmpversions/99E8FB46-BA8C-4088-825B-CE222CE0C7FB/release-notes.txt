@@ -1,0 +1,9 @@
+Please delete the old app before installing
+
+iOS App Updates:
+Incorrect answer alert
+Progress bars
+Rounded corners in favorites
+Added checkmark on dropdown buttons in purchase area for completely purchased seasons
+Tapping in the Now Playing area will take you to either the player view, or the favorites view.
+Google Analytics
