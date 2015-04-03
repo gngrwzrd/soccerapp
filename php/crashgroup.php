@@ -1,9 +1,9 @@
 <?php
 
 require_once("soccer.utils.php");
-require_once("AppCrash.php");
+require_once("crash.php");
 
-class AppCrashGroup {
+class CrashGroup {
 	
 	var $groupLabel;
 	var $crashes; //array of AppCrash objects
@@ -14,7 +14,7 @@ class AppCrashGroup {
 		$crashes = array();
 		foreach($files as $crashlog) {
 			$crashPath = SoccerUtils::getInstance()->joinPaths(array($path,$crashlog));
-			$crash = new AppCrash();
+			$crash = new Crash();
 			$crash->initWithPath($crashPath);
 			array_push($crashes,$crash);
 		}
@@ -27,8 +27,8 @@ class AppCrashGroup {
 		return $a->date < $b->date;
 	}
 
-	static function AllAppGroups() {
-
+	static function GetAllCrashGroups() {
+		
 	}
 }
 ?>

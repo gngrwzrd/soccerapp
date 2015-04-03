@@ -6,9 +6,9 @@ define("BASE_PATH",dirname(__FILE__));
 require_once(BASE_PATH . "/uuid.php");
 require_once(BASE_PATH . "/soccer.utils.php");
 require_once(BASE_PATH . "/user.php");
-require_once(BASE_PATH . "/AppVersion.php");
-require_once(BASE_PATH . "/AppCrash.php");
-require_once(BASE_PATH . "/AppCrashGroup.php");
+require_once(BASE_PATH . "/appversion.php");
+require_once(BASE_PATH . "/crash.php");
+require_once(BASE_PATH . "/crashgroup.php");
 require_once(BASE_PATH . "/Savant/Savant3.php");
 require_once(BASE_PATH . "/parsedown/Parsedown.php");
 
@@ -123,18 +123,21 @@ class Soccer {
 		
 		fclose($handle);
 	}
-
+	
 	function dashboardIndex($filter="") {
 		$versions = AppVersion::GetAllAppVersions();
+		
 		$latestVersion = $versions[0];
 		$savant = $this->getDefaultSavant();
 		$savant->versions = $versions;
 		$savant->crashGroups = $this->config->getAllCrashGroups();
+		
 		$savant->filter = $filter;
 		$savant->dashboardLink = $this->config->dashboardURL;
 		$savant->crashLink = $this->config->joinPaths(array($this->config->baseURL,"crash"));
 		$savant->recruitLink = $this->config->baseURL;
 		$savant->installLink = $this->config->baseURL . "?a=install&v=" . $latestVersion->uuid;
+		
 		$result = $savant->fetch("templates/actions.dashboard.index.php");
 		return $result;
 	}
@@ -211,11 +214,17 @@ class Soccer {
 			return $result;
 		}
 		
+		//get app version
 		$av = AppVersion::GetAppVersion($vuuid);
+		if(!$av) {
+			$result = $savant->fetch("templates/404.php");
+			return $result;
+		}
+
+		//render template
 		$savant->appVersion = $av;
 		$savant->applicationPlist = urlencode($this->config->baseURL."?a=plist&v=".$vuuid);
 		$result = $savant->fetch("templates/actions.install.php");
-		
 		return $result;
 	}
 
@@ -223,9 +232,14 @@ class Soccer {
 	function servePlist() {
 		$uuid = $this->config->getRequestVar('v');
 		$av = AppVersion::GetAppVersion($uuid);
+		if(!$av) {
+			$savant = $this->getDefaultSavant();
+			$result = $savant->fetch("templates/404.php");
+			return $result;
+		}
 		$result = $av->getIOSInstallPlist();
 		header("Content-Type: application/xml");
-		echo $result;
+		return $result; //used to be echo....
 	}
 
 	/** ios crash submission handler **/
@@ -241,6 +255,7 @@ class Soccer {
 	}
 	
 	/** new version methods **/
+
 	function newVersion() {
 		$savant = $this->getDefaultSavant();
 		$savant->dashboardLink = $this->config->dashboardURL;
@@ -264,6 +279,11 @@ class Soccer {
 	function releaseNotes() {
 		$uuid = $this->config->getRequestVar("v");
 		$av = AppVersion::GetAppVersion($uuid);
+		if(!$av) {
+			$savant = $this->getDefaultSavant();
+			$result = $savant->fetch("templates/404.php");
+			return $result;
+		}
 		$savant = $this->getDefaultSavant();
 		$savant->appVersion = $av;
 		$result = $savant->fetch("templates/actions.dashboard.releasenotes.php");
@@ -287,15 +307,16 @@ class Soccer {
 	}
 
 	/** delete a crash **/
-
+	
 	function deleteCrash() {
-		$crash = $this->config->getRequestVar("c");
-		$version = $this->config->getRequestVar("v");
+		$crash = Crash::GetCrash($this->config->getRequestVar("c"));
+		//$version = $this->config->getRequestVar("v");
 		$filter = $this->config->getRequestVar("filter");
-		$path = $this->joinPaths(array($this->config->crashPath,$version,$crash));
-		if(file_exists($path)) {
-			unlink($path);
-		}
+		//$path = $this->joinPaths(array($this->config->crashPath,$version,$crash));
+		$crash->delete();
+		//if(file_exists($path)) {
+		//	unlink($path);
+		//}
 		$redir = $this->config->dashboardURL;
 		header("Location: " . $redir);
 	}

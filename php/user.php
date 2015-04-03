@@ -9,7 +9,7 @@ class User {
 	var $firstname;
 	var $lastname;
 	var $email;
-
+	
 	static function NewUser($firstname,$lastname,$email) {
 		$utils = SoccerUtils::getInstance();
 		$user = new User();
@@ -39,12 +39,12 @@ class User {
 		$util = SoccerUtils::getInstance();
 		$userUUID = False;
 
-		if(isset($_COOKIE[$util->userUUIDSessionVar])) {
-			$userUUID = $_COOKIE[$util->userUUIDSessionVar];
+		if(isset($_COOKIE[$util->userSessionVar])) {
+			$userUUID = $_COOKIE[$util->userSessionVar];
 		}
 
-		if(!$userUUID && isset($_SESSION[$util->userUUIDSessionVar])) {
-			$userUUID = $_SESSION[$util->userUUIDSessionVar];
+		if(!$userUUID && isset($_SESSION[$util->userSessionVar])) {
+			$userUUID = $_SESSION[$util->userSessionVar];
 		}
 
 		if($userUUID) {
@@ -61,8 +61,8 @@ class User {
 		$utils = SoccerUtils::getInstance();
 		$path = $utils->joinPaths(array($utils->usersPath,$uuid));
 		$utils->rrmdir($path);
-		unset($_SESSION[$utils->userUUIDSessionVar]);
-		unset($_COOKIE[$utils->userUUIDSessionVar]);
+		unset($_SESSION[$utils->userSessionVar]);
+		unset($_COOKIE[$utils->userSessionVar]);
 	}
 	
 	static function HasUser($uuid) {
@@ -101,8 +101,8 @@ class User {
 	
 	function saveToSession() {
 		$util = SoccerUtils::getInstance();
-		setcookie($util->userUUIDSessionVar,$this->uuid,time()+strtotime("+1 year"));
-		$util->setSession($util->userUUIDSessionVar,$this->uuid);
+		setcookie($util->userSessionVar,$this->uuid,time()+strtotime("+1 year"));
+		$util->setSession($util->userSessionVar,$this->uuid);
 	}
 	
 	function getMobileConfig() {

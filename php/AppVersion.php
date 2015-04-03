@@ -38,9 +38,14 @@ class AppVersion {
 			error_log("AppVersion::GetAppVersion nil uuid");
 			return NULL;
 		}
-
+		
 		$utils = SoccerUtils::getInstance();
 		$path = $utils->joinPaths(array($utils->versionsPath,$uuid));
+		
+		if(!file_exists($path)) {
+			return NULL;
+		}
+
 		$executables = $utils->getFilesAtPath($path,array("ipa","exe","dmg","zip","apk"));
 		$executablePath = NULL;
 		$executableName = NULL;

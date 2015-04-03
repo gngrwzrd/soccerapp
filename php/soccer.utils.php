@@ -16,10 +16,9 @@ class SoccerUtils {
 	var $versionsPath;
 	var $registeredURL;
 	
-	var $userUUIDSessionVar;
+	var $userSessionVar;
 	var $maxCrashGroups;
 	var $maxCrashesInGroup;
-	var $maxVersions;
 
 	static function getInstance() {
 		static $instance = NULL;
@@ -30,9 +29,8 @@ class SoccerUtils {
 	}
 
 	protected function __construct() {
-		$this->userUUIDSessionVar = "user_uuid";
+		$this->userSessionVar = "user_uuid";
 		$this->maxCrashGroups = 5;
-		$this->maxVersions = 10;
 		$this->maxCrashesInGroup = 10;
 
 		$this->basePath = realpath(dirname(__FILE__) . '/..');
@@ -70,10 +68,6 @@ class SoccerUtils {
 				error_log("Cannot create 'versions' folder. Check permissions");
 			}
 		}
-	}
-	
-	function getCachedUserMobileConfigPath($uuid) {
-		return $this->joinPaths(array($this->usersPath,$uuid,"profile.mobileconfig"));
 	}
 
 	function UUID() {
@@ -119,6 +113,16 @@ class SoccerUtils {
 		$handle = fopen($path,"r");
 		$content = fread($handle,$size);
 		fclose($handle);
+		return $content;
+	}
+
+	function readLines($path,$lines) {
+		$lines = array();
+		$handle = fopen($path,"r");
+		while(($line=fgets($handle)) && count($lines) < $lines) {
+			array_push($lines,$line);
+		}
+		$content = join("",$lines);
 		return $content;
 	}
 
@@ -196,6 +200,21 @@ class SoccerUtils {
 		return $realfiles;
 	}
 
+	function rsearch($path,$needle) {
+		$rawfiles = scandir($path);
+		foreach($rawfiles as $file) {
+			if($file == "." || $file == "..") {
+				continue;
+			}
+			$search = $path . '/' . $file;
+			if($file == $needle) {
+				return $search;
+			} else if(is_dir($search)) {
+				return $this->rsearch($search,$needle);
+			}
+		}
+	}
+
 	function getIOSDeviceUDIDFromData($data) {
 		//device id
 		$matches = array();
@@ -249,7 +268,7 @@ class SoccerUtils {
 				break;
 			}
 			$buildVersionPath = $this->joinPaths(array($path,$version));
-			$group = new AppCrashGroup($version,$buildVersionPath);
+			$group = new CrashGroup($version,$buildVersionPath);
 			$crashesByVersion[$version] = $group;
 			$count++;
 		}
