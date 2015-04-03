@@ -34,8 +34,11 @@
 			</div>
 			<div class="sectionRow sectionRowForm">
 				<table cellpadding="0" cellspacing="0"><tr>
-				<td class="label"><label for="executable">IPA:</label></td>
-				<td><input type="file" name="executable" id="executable" /></td>
+				<td class="label"><label for="executable">Executable:</label></td>
+				<td>
+					<input type="file" name="executable" id="executable" /><br/><br/>
+					<strong>(IPA, APK, DMG, ZIP)</strong>
+				</td>
 				</tr></table>
 			</div>
 			<div class="sectionRow sectionRowForm">

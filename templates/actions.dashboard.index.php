@@ -76,14 +76,9 @@
 		<?php if( count($this->crashGroups) > 0) { ?>
 			<?php foreach($this->crashGroups as $group) {?>
 				<div class="sectionRow groupTitle">
-					<table cellspacing="0" cellspacing="0"><tr>
-					<td>
-						<a href="">
-							<span class="groupTitleText">Version <?php echo $group->groupLabel; ?></span>
-						</a>
-					</td>
-					<td align="right"><span class="groupTitleLinks"><a href="">Download all</a></span></td>
-					</tr></table>
+					<a href="">
+						<span class="groupTitleText">Version <?php echo $group->groupLabel; ?></span>
+					</a>
 				</div>
 				<?php foreach($group->crashes as $crash) {?>
 					<div class="sectionGroupRow">
