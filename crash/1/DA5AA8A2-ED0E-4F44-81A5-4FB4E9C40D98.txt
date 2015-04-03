@@ -4,7 +4,7 @@ Hardware Model:      iPhone7,2
 Process:         MyCrashingApp [1444]
 Path:            /private/var/mobile/Containers/Bundle/Application/75CAC0E1-40B4-411B-BFB5-63E4821BFCF8/MyCrashingApp.app/MyCrashingApp
 Identifier:      com.gngrwzrd.MyCrashingApp
-Version:         2
+Version:         1
 Code Type:       ARM-64
 Parent Process:  launchd [1]
 

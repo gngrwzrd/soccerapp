@@ -68,6 +68,7 @@
 	<?php } ?>
 	
 	<?php if(!$this->filter || $this->filter == "onlycrashes") { ?>
+	
 	<!-- crash logs -->
 	<div class="section">
 		<div class="sectionHeader">
@@ -76,15 +77,20 @@
 		<?php if( count($this->crashGroups) > 0) { ?>
 			<?php foreach($this->crashGroups as $group) {?>
 				<div class="sectionRow groupTitle">
-					<a href="">
-						<span class="groupTitleText">Version <?php echo $group->groupLabel; ?></span>
-					</a>
+					<table cellspacing="0" cellspacing="0"><tr>
+					<td>
+						<a href="?a=onlycrashes&v=<?php echo $group->groupLabel; ?>">
+							<span class="groupTitleText">Version <?php echo $group->groupLabel; ?></span>
+						</a>
+					</td>
+					<td align="right"><span class="groupTitleLinks"><a href="">Download all</a></span></td>
+					</tr></table>
 				</div>
 				<?php foreach($group->crashes as $crash) {?>
 					<div class="sectionGroupRow">
 						<table cellpadding="0" cellspacing="0"><tr>
 						<td class="sectionRowTitle">
-							<a href="<?php echo $this->crashLink . '/' . $group->groupLabel . '/' . $crash->name; ?>"><?php echo substr($crash->name,0,18); ?></a>
+							<a href="<?php echo $crash->getCrashFileURL() ; ?>"><?php echo substr($crash->name,0,18); ?></a>
 						</td>
 						<td align="right">
 							<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
