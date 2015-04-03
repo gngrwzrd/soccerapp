@@ -23,7 +23,7 @@
 	</div>
 	<div class="section">
 		<div class="sectionHeader">
-			<?php echo $this->versionName; ?>
+			<?php echo $this->appVersion->name; ?>
 		</div>
 		
 		<?php if(!$this->debug) { ?>
@@ -48,7 +48,7 @@
 		<?php } ?>
 		
 		<div class="sectionRow releaseNotes">
-<?php echo $this->releaseNotes; ?>
+<?php echo $this->appVersion->getReleaseNotes(); ?>
 		</div>
 	</div>
 </div>

@@ -8,7 +8,9 @@ class SoccerUtils {
 	var $basePath;
 	var $baseURL;
 	var $dashboardURL;
+	var $versionsURL;
 	var $appDataPath;
+	var $appData;
 	var $crashPath;
 	var $usersPath;
 	var $versionsPath;
@@ -18,7 +20,7 @@ class SoccerUtils {
 	var $maxCrashGroups;
 	var $maxCrashesInGroup;
 	var $maxVersions;
-	
+
 	static function getInstance() {
 		static $instance = NULL;
 		if($instance == NULL) {
@@ -43,11 +45,13 @@ class SoccerUtils {
 		
 		$this->baseURL = rtrim($this->baseURL,'/');
 		$this->dashboardURL = $this->joinPaths(array($this->baseURL,"dashboard.php"));
+		$this->versionsURL = $this->joinPaths(array($this->baseURL,"versions"));
+		$this->regiseredURL = $this->baseURL . "/registered";
 		$this->crashPath = $this->joinPaths(array($this->basePath,"crash"));
 		$this->versionsPath = $this->joinPaths(array($this->basePath,"versions"));
 		$this->usersPath = $this->joinPaths(array($this->basePath,"users"));
-		$this->regiseredURL = $this->baseURL . "/registered";
 		$this->appDataPath = $this->joinPaths(array($this->basePath,"app.json"));
+		$this->appData = json_decode($this->readFileContent($this->appDataPath));
 
 		if(!file_exists($this->crashPath)) {
 			if(!mkdir($this->crashPath)) {
@@ -67,22 +71,9 @@ class SoccerUtils {
 			}
 		}
 	}
-
-	function getUserFolderPath($uuid) {
-		return $this->joinPaths(array($this->usersPath,$uuid));
-	}
-
-	function getUserJSONDataPath($uuid) {
-		return $this->joinPaths(array($this->getUserFolderPath($uuid),"user.json"));
-	}
-
-	function getUserJSONData($uuid) {
-		$content = $this->readFileContent($this->getUserJSONDataPath);
-		return json_decode($content);
-	}
-
+	
 	function getCachedUserMobileConfigPath($uuid) {
-		return $this->joinPaths(array($this->getUserFolderPath($uuid),"profile.mobileconfig"));
+		return $this->joinPaths(array($this->usersPath,$uuid,"profile.mobileconfig"));
 	}
 
 	function UUID() {
@@ -91,6 +82,10 @@ class SoccerUtils {
 	
 	function sortDescendingByDate($a, $b) {
 		return $a->date < $b->date;
+	}
+
+	function sortDescendingByName($a, $b) {
+		return $a->name < $b->name;
 	}
 
 	function getRequestVar($var,$default=False) {
@@ -107,9 +102,8 @@ class SoccerUtils {
 		return $default;
 	}
 
-	function setSession($var,$value) {
-		error_log("set session: " . $var . ' ' . $value);
-		$_SESSION[$var] = $value;
+	function setSession($key,$value) {
+		$_SESSION[$key] = $value;
 	}
 	
 	function joinPaths($paths=array()) {
@@ -242,80 +236,6 @@ class SoccerUtils {
 			return $matches[1];
 		}
 		return "Unknown";
-	}
-
-	function getReleaseNotesForVersion($versionUUID) {
-		$search = $this->joinPaths(array($this->versionsPath,$versionUUID));
-		$txt = $this->getFilesAtPath($search,array("txt"));
-		if(count($txt) == 1) {
-			$content = $this->readFileContent($this->joinPaths(array($search,$txt[0])));
-			$parsedown = new Parsedown();
-			return $parsedown->text($content);
-		}
-		return "Not found";
-	}
-
-	function getCachedUserMobileConfig($uuid) {
-		$path = $this->getCachedUserMobileConfigPath($uuid);
-		if(!file_exists($path)) {
-			return FALSE;
-		}
-		return $this->readFileContent($path);
-	}
-
-	function getAllVersions() {
-		$path = $this->versionsPath;
-		if(!file_exists($path)) {
-			return array();
-		}
-		$rawfiles = scandir($path);
-		$allVersions = array();
-		$count = 0;
-		foreach($rawfiles as $UDID) {
-			if($UDID == ".." || $UDID == ".") {
-				continue;
-			}
-			if($count == $this->maxVersions) {
-				break;
-			}
-			$UDIDPath = $this->joinPaths(array($path,$UDID));
-			if(is_dir($UDIDPath)) {
-				//UDID is dir, look for files in that dir.
-				$versions = $this->getFilesAtPath($UDIDPath,array("ipa"));
-				if(count($versions) == 1) {
-					$filename = $versions[0];
-					$filepath = $this->joinPaths(array($UDIDPath,$filename));	
-					$appVersion = new AppVersion($filepath,$UDID,$filename);
-					$count++;
-					array_push($allVersions,$appVersion);
-				} else if(count($versions) > 1) {
-					error_log("Version folder has multiple versions in it. " . $UDIDPath);
-				} else if(count($versions) < 1) {
-					error_log("Version folder has no versions in it. " . $UDIDPath);
-				}
-			}
-		}
-		usort($allVersions,array("SoccerUtils","sortDescendingByDate"));
-		return $allVersions;
-	}
-
-	function getVersionFileName($version) {
-		$path = $this->versionsPath;
-		$rawfiles = scandir($path);
-		foreach($rawfiles as $UDID) {
-			if($UDID == $version) {
-				$UDIDPath = $this->joinPaths(array($path,$UDID));
-				$versions = $this->getFilesAtPath($UDIDPath,array("ipa"));
-				if(count($versions) == 1) {
-					return $versions[0];
-				} else if(count($versions) > 1) {
-					error_log("Version folder has multiple versions in it. " . $UDIDPath);
-				} else if(count($versions) == 0) {
-					error_log("Version folder has no versions in it. " . $UDIDPath);
-				}
-			}
-		}
-		return "";
 	}
 
 	function getAllCrashGroups() {

@@ -23,10 +23,10 @@
 	</div>
 	<div class="section">
 		<div class="sectionHeader">
-			<?php echo $this->versionName; ?> Release Notes
+			<?php echo $this->appVersion->name; ?> Release Notes
 		</div>
 		<div class="sectionRow releaseNotes">
-<?php echo $this->releaseNotes; ?>
+<?php echo $this->appVersion->getReleaseNotes(); ?>
 		</div>
 	</div>
 </div>

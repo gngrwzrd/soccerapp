@@ -38,9 +38,9 @@
 				Please enter your information
 			</div>
 			<div class="sectionMenu">
-				Before registering your device, we ask that you enter your name and email so we're able to see who's installing <?php echo $this->applicationName; ?>.
+				Before registering your device, we ask that you enter your name and email so we're able to see who's using <?php echo $this->applicationName; ?>.
 			</div>
-			<form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>?a=newuser&r=<?php echo $this->redirectAction; ?>">
+			<form method="POST" action="<?php echo $this->formActionURL; ?>">
 				<div class="sectionRow sectionRowForm">
 					<table cellspacing="0" cellpadding="0"><tr>
 					<td class="label"><label for="firstName">First Name:</label></td>

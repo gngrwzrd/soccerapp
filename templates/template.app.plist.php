@@ -11,7 +11,7 @@
                     <key>kind</key>
                     <string>software-package</string>
                     <key>url</key>
-                    <string><?php echo $this->applicationURL; ?></string>
+                    <string><?php echo $this->appVersion->getApplicationURL(); ?></string>
                 </dict>
                 <dict>
                     <key>kind</key>
@@ -19,7 +19,7 @@
                     <key>needs-shine</key>
                     <false/>
                     <key>url</key>
-                    <string><?php echo $this->icon; ?></string>
+                    <string><?php echo $this->appVersion->icon; ?></string>
                 </dict>
                 <dict>
                     <key>kind</key>
@@ -27,7 +27,7 @@
                     <key>needs-shine</key>
                     <false/>
                     <key>url</key>
-                    <string><?php echo $this->icon; ?></string>
+                    <string><?php echo $this->appVersion->icon; ?></string>
                 </dict>
             </array>
             <key>metadata</key>

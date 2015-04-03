@@ -1,4 +1,0 @@
-* Updated background image
-* Added new now playing
-* Fixed player issue
-* Initial store view
