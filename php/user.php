@@ -24,9 +24,11 @@ class User {
 		$util = SoccerUtils::getInstance();
 		$json = $util->joinPaths(array($util->usersPath,$uuid,'user.json'));
 		if(!file_exists($json)) {
+			error_log("not exist");
 			return NULL;
 		}
-		$data = json_decode($json);
+		$content = $util->readFileContent($json);
+		$data = json_decode($content);
 		$user = new User();
 		$user->firstname = $data->firstname;
 		$user->lastname = $data->lastname;

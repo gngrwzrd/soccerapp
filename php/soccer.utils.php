@@ -9,12 +9,13 @@ class SoccerUtils {
 	var $baseURL;
 	var $dashboardURL;
 	var $versionsURL;
+	var $registeredURL;
 	var $appDataPath;
 	var $appData;
 	var $crashPath;
 	var $usersPath;
 	var $versionsPath;
-	var $registeredURL;
+	var $devicesPath;
 	
 	var $userSessionVar;
 	var $maxCrashGroups;
@@ -48,6 +49,7 @@ class SoccerUtils {
 		$this->crashPath = $this->joinPaths(array($this->basePath,"crash"));
 		$this->versionsPath = $this->joinPaths(array($this->basePath,"versions"));
 		$this->usersPath = $this->joinPaths(array($this->basePath,"users"));
+		$this->devicesPath = $this->joinPaths(array($this->basePath,"devices"));
 		$this->appDataPath = $this->joinPaths(array($this->basePath,"app.json"));
 		$this->appData = json_decode($this->readFileContent($this->appDataPath));
 
@@ -88,7 +90,7 @@ class SoccerUtils {
 		}
 		return $default;
 	}
-
+	
 	function getSession($var,$default=False) {
 		if(isset($_SESSION[$var])) {
 			return $_SESSION[$var];
@@ -122,8 +124,19 @@ class SoccerUtils {
 		while(($line=fgets($handle)) && count($lines) < $lines) {
 			array_push($lines,$line);
 		}
+		fclose($handle);
 		$content = join("",$lines);
 		return $content;
+	}
+
+	function readLinesAsArray($path,$lines) {
+		$lines = array();
+		$handle = fopen($path,"r");
+		while(($line=fgets($handle)) && count($lines) < $lines) {
+			array_push($lines,$line);
+		}
+		fclose($handle);
+		return $lines;
 	}
 
 	function writeFileContent($path,$content) {
@@ -213,67 +226,6 @@ class SoccerUtils {
 				return $this->rsearch($search,$needle);
 			}
 		}
-	}
-
-	function getIOSDeviceUDIDFromData($data) {
-		//device id
-		$matches = array();
-		preg_match('/[a-zA-Z0-9]{40}/',$data,$matches);
-		$device = $matches[0];
-		return $device;
-	}
-	
-	function getIOSDeviceModelFromData($data) {
-		//iPhone
-		$matches = array();
-		preg_match('/iPhone[0-9]{1,2}\,[0-9]{1,2}/',$data,$matches);
-		if(count($matches) > 0) {
-			$model = $matches[0];
-		}
-		
-		//iPad
-		$matches = array();
-		preg_match('/iPad[0-9]{1,2}\,[0-9]{1,2}/',$data,$matches);
-		if(count($matches) > 0) {
-			$model = $matches[0];
-		}
-
-		//iPod
-		$matches = array();
-		preg_match('/iPod[0-9]{1,2}\,[0-9]{1,2}/',$data,$matches);
-		if(count($matches) > 0) {
-			$model = $matches[0];
-		}
-
-		return $model;
-	}
-
-	function getVersionFromIOSCrash($data) {
-		$matches = array();
-		preg_match('/Version:\s+([0-9])+\n/',$data,$matches);
-		if(count($matches) > 0) {
-			return $matches[1];
-		}
-		return "Unknown";
-	}
-
-	function getAllCrashGroups() {
-		$path = $this->crashPath;
-		$dirs = $this->getDirsAtPath($path);
-		rsort($dirs);
-		$count = 0;
-		$crashesByVersion = array();
-		foreach($dirs as $version) {
-			if($count == $this->maxCrashGroups) {
-				break;
-			}
-			$buildVersionPath = $this->joinPaths(array($path,$version));
-			$group = new CrashGroup($version,$buildVersionPath);
-			$crashesByVersion[$version] = $group;
-			$count++;
-		}
-		krsort($crashesByVersion,SORT_NUMERIC);
-		return $crashesByVersion;
 	}
 }
 

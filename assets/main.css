@@ -3,32 +3,24 @@ body {
 	margin:0;
 	padding:0;
 }
-
 a {color:#51535B;}
-
 table {width:100%;margin:0;padding:0;}
-
-pre.session{display:none;}
-
 form {margin:0; padding:0;}
 
-.center {text-align:center;}
-
-.delete {color:#D0091B;}
-
+.delete{color:#D0091B;}
+.rederror{border:solid 1px red;}
+.center{text-align:center;}
 .desktop{color:red;font-size:24px;}
-
 .mobile{display:none;}
 
-.rederror {
-	border:solid 1px red;
-}
-
 .content {
+	min-width:600px;
 	margin:0;
 	padding:0;
 	margin-bottom:20px;
 }
+
+/************************************ SECTION **/
 
 .section {
 	border-top:solid 1px #BBB;
@@ -39,9 +31,12 @@ form {margin:0; padding:0;}
 	margin-right:50px;
 }
 
+
+/************************************** SECTION HEADER **/
+
 .sectionHeader {
-	font-size:22px;
 	padding:20px;
+	font-size:22px;
 	font-weight:bold;
 	background-color:#EBF0F3;
 	border-bottom:solid 1px #CCC;
@@ -49,10 +44,6 @@ form {margin:0; padding:0;}
 
 .sectionHeader a {
 	color:#222;
-}
-
-.topHeader {
-	background-color:#F7FCFF;
 }
 
 .sectionHeaderIcon {
@@ -72,23 +63,33 @@ form {margin:0; padding:0;}
 	font-weight:bold;
 }
 
+.topHeader {
+	background-color:#F7FCFF;
+}
+
+/********************************************* SECTION MENU **/
+
 .sectionMenu {
-	padding:10px 18px 8px 18px;
+	padding:6px;
+	padding-left:20px;
+	padding-right:20px;
 	background-color:#DCE6EB;
 	border-bottom:solid 1px #CCC;
 	font-size:12px;
 	line-height:14px;
 }
 
+/******************************************** SECTION ROW **/
+
 .sectionRow {
 	padding:10px;
-	padding-right:20px;
+	padding-top:12px;
 	padding-left:20px;
+	padding-right:20px;
 	background-color:#F3F3F3;
 	border-bottom:solid 1px #CCC;
 	color:#51535B;
 	font-size:12px;
-	line-height:16px;
 }
 
 .sectionRow td {
@@ -96,20 +97,11 @@ form {margin:0; padding:0;}
 	font-size:12px;
 }
 
-.sectionRowTitle, .sectionRowTitle a {
-	//font-weight:bold;
-	font-size:12px;
+.sectionRow td.device {
+	//font-size:10px;
 }
 
-.groupTitle {
-	font-weight:bold;
-}
-
-.groupTitleLinks {
-	font-weight:normal;
-}
-
-.groupTitleText {
+.sectionRow .crashVersion {
 	display:inline-block;
 	background-color:#D87A46;
 	padding:4px 4px 2px 4px;
@@ -118,20 +110,7 @@ form {margin:0; padding:0;}
 	font-weight:bold;
 }
 
-.sectionGroupRow {
-	padding:10px;
-	padding-right:20px;
-	padding-left:20px;
-	background-color:#FAFAFA;
-	border-bottom:solid 1px #CCC;
-	color:#51535B;
-	font-size:12px;
-}
-
-.sectionGroupRow td {
-	font-size:12px;
-	color:#51535B;
-}
+/******************************************* SECTION ROW FORMS **/
 
 .sectionRowForm td.label {
 	width:100px;
@@ -158,23 +137,14 @@ form {margin:0; padding:0;}
 	height:400px;
 }
 
-.sectionFooter {
-	background-color:white;
-	border-bottom:solid 1px #CCC;
-	padding:5px;
-	padding-left:20px;
-	font-size:10px;
-	color:#51535B;
-	margin-top:3px;
-	line-height:12px;
-}
-
 .desktop .sectionRow {
 	color:red;
 	font-size:16px;
 	font-weight:bold;
 	padding-top:14px;
 }
+
+/***************************************** RELEASE NOTES STYLES FOR MARKUP **/
 
 .releaseNotes ul {
 	margin:0;
@@ -188,13 +158,7 @@ form {margin:0; padding:0;}
 	margin-bottom:4px;
 }
 
-.rnotes {
-	margin-top:20px;
-}
-
-.rnotes a {
-	font-size:12px;
-}
+/***************************************** FOOTER **/
 
 .footer {
 	font-size:12px;
@@ -227,8 +191,8 @@ form {margin:0; padding:0;}
 
 .groupTitleText {
 	padding:0;
-	padding-left:5px; //2px 4px 2px 4px;
-	padding-right:3px;
+	padding-left:2px;
+	padding-right:2px;
 
 }
 

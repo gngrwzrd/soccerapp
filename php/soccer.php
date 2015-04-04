@@ -8,7 +8,7 @@ require_once(BASE_PATH . "/soccer.utils.php");
 require_once(BASE_PATH . "/user.php");
 require_once(BASE_PATH . "/appversion.php");
 require_once(BASE_PATH . "/crash.php");
-require_once(BASE_PATH . "/crashgroup.php");
+require_once(BASE_PATH . "/device.php");
 require_once(BASE_PATH . "/Savant/Savant3.php");
 require_once(BASE_PATH . "/parsedown/Parsedown.php");
 
@@ -95,49 +95,19 @@ class Soccer {
 		$savant->enterprise = $utils->appData->enterprise;
 		return $savant;
 	}
-
-	function saveDeviceIdAndModel($device,$model) {
-		$devices = $this->util->joinPaths(array($this->config->basePath,"devices.txt"));
-		
-		if(!file_exists($devices)) {
-			$handle = fopen($devices,"w");
-			fwrite($handle,"deviceIdentifier\tdeviceName\n");
-			fclose($handle);
-		}
-		
-		$size = filesize($devices);
-		$handle = fopen($devices,"r+");
-		$write = TRUE;
-		
-		while(($line=fgets($handle))) {
-			if(preg_match('/'.$device.'/',$line)) {
-				$write = FALSE;
-			}
-		}
-		
-		if($write) {
-			$line = $device . "\t" . $model . "\n";
-			fseek($handle,$size);
-			fwrite($handle,$line);
-		}
-		
-		fclose($handle);
-	}
 	
 	function dashboardIndex($filter="") {
 		$versions = AppVersion::GetAllAppVersions();
-		
 		$latestVersion = $versions[0];
 		$savant = $this->getDefaultSavant();
 		$savant->versions = $versions;
-		$savant->crashGroups = $this->config->getAllCrashGroups();
-		
+		$savant->crashes = Crash::GetAllCrashes();
+		$savant->devices = Device::GetAllDevices();
 		$savant->filter = $filter;
 		$savant->dashboardLink = $this->config->dashboardURL;
 		$savant->crashLink = $this->config->joinPaths(array($this->config->baseURL,"crash"));
 		$savant->recruitLink = $this->config->baseURL;
 		$savant->installLink = $this->config->baseURL . "?a=install&v=" . $latestVersion->uuid;
-		
 		$result = $savant->fetch("templates/actions.dashboard.index.php");
 		return $result;
 	}
@@ -147,6 +117,9 @@ class Soccer {
 	function newUserSubmitted() {
 		$redirect = $this->config->getRequestVar("r");
 		$versionUUID = $this->config->getRequestVar("v");
+		$firstname = $this->config->getRequestVar("firstName");
+		$lastname = $this->config->getRequestVar("lastName");
+		$email = $this->config->getRequestVar("email");
 		$user = User::NewUser($firstname,$lastname,$email);
 		$user->save();
 		$redirectURL = $this->config->baseURL . "?a=" . $redirect;
@@ -183,12 +156,9 @@ class Soccer {
 	//setp 3. Handle the callback from iOS. Get user info and device/model info.
 	function handleConfigPayload() {
 		$data = file_get_contents('php://input');
-		$userUUID = $this->config->getRequestVar("u");
-		$device = $this->config->getIOSDeviceUDIDFromData($data);
-		$model = $this->config->getIOSDeviceModelFromData($data);
-		//TODO: add user info to the devices saved.
-		//TODO: Maybe switch what's saved to txt files in the devices/ folder. That's all easier to read/parse than a single txt file.
-		$this->saveDeviceIdAndModel($device,$model);
+		$user = User::GetUser($this->config->getRequestVar("u"));
+		$device = Device::NewDevice($user,$data);
+		$device->save();
 		header("Location: " . $this->config->regiseredURL);
 	}
 

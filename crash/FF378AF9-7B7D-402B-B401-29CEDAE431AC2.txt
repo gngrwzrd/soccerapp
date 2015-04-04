@@ -1,14 +1,14 @@
-Incident Identifier: CCEDC8EB-5C37-49C1-B6C9-14AAA81D9E04
+Incident Identifier: FF378AF9-7B7D-402B-B401-29CEDAE431AC
 CrashReporter Key:   TODO
 Hardware Model:      iPhone7,2
-Process:         MyCrashingApp [592]
-Path:            /private/var/mobile/Containers/Bundle/Application/3763F5C9-3E9C-43CB-84FF-02F865648411/MyCrashingApp.app/MyCrashingApp
+Process:         MyCrashingApp [1075]
+Path:            /private/var/mobile/Containers/Bundle/Application/A109198D-ABD1-4DC6-96ED-815E672FC3CC/MyCrashingApp.app/MyCrashingApp
 Identifier:      com.gngrwzrd.MyCrashingApp
-Version:         3
+Version:         1
 Code Type:       ARM-64
 Parent Process:  launchd [1]
 
-Date/Time:       2015-04-02 05:41:10 +0000
+Date/Time:       2015-04-04 03:36:36 +0000
 OS Version:      iPhone OS 8.2 (12D508)
 Report Version:  104
 
@@ -23,7 +23,7 @@ Last Exception Backtrace:
 0   CoreFoundation                      0x000000018268e530 0x182568000 + 1205552
 1   libobjc.A.dylib                     0x00000001936640e4 0x19365c000 + 32996
 2   CoreFoundation                      0x0000000182573a54 0x182568000 + 47700
-3   MyCrashingApp                       0x00000001000b432c 0x1000b0000 + 17196
+3   MyCrashingApp                       0x0000000100024330 0x100020000 + 17200
 4   UIKit                               0x0000000186ed0a14 0x186e8c000 + 281108
 5   UIKit                               0x0000000186eb9d08 0x186e8c000 + 187656
 6   UIKit                               0x0000000186ed03b0 0x186e8c000 + 279472
@@ -38,13 +38,13 @@ Last Exception Backtrace:
 15  CoreFoundation                      0x00000001825711f4 0x182568000 + 37364
 16  GraphicsServices                    0x000000018b9936fc 0x18b988000 + 46844
 17  UIKit                               0x0000000186f0210c 0x186e8c000 + 483596
-18  MyCrashingApp                       0x00000001000b4a5c 0x1000b0000 + 19036
+18  MyCrashingApp                       0x0000000100024a60 0x100020000 + 19040
 19  libdyld.dylib                       0x0000000193ce2a08 0x193ce0000 + 10760
 
 Thread 0 Crashed:
 0   libsystem_kernel.dylib              0x0000000193dfb270 0x193de0000 + 111216
 1   libsystem_c.dylib                   0x0000000193d72b18 0x193d10000 + 404248
-2   MyCrashingApp                       0x00000001000b8358 0x1000b0000 + 33624
+2   MyCrashingApp                       0x000000010002835c 0x100020000 + 33628
 3   CoreFoundation                      0x000000018268e8f0 0x182568000 + 1206512
 4   libobjc.A.dylib                     0x00000001936643b4 0x19365c000 + 33716
 5   libc++abi.dylib                     0x0000000192e4dbb4 0x192e30000 + 121780
@@ -53,7 +53,7 @@ Thread 0 Crashed:
 8   CoreFoundation                      0x00000001825712a4 0x182568000 + 37540
 9   GraphicsServices                    0x000000018b9936fc 0x18b988000 + 46844
 10  UIKit                               0x0000000186f0210c 0x186e8c000 + 483596
-11  MyCrashingApp                       0x00000001000b4a5c 0x1000b0000 + 19036
+11  MyCrashingApp                       0x0000000100024a60 0x100020000 + 19040
 12  libdyld.dylib                       0x0000000193ce2a08 0x193ce0000 + 10760
 
 Thread 1:
@@ -61,55 +61,30 @@ Thread 1:
 1   libdispatch.dylib                   0x0000000193cb799c 0x193cb4000 + 14748
 
 Thread 2:
-0   libsystem_kernel.dylib              0x0000000193de0e0c 0x193de0000 + 3596
-1   CoreFoundation                      0x0000000182646218 0x182568000 + 909848
-2   CoreFoundation                      0x000000018264416c 0x182568000 + 901484
-3   CoreFoundation                      0x00000001825711f4 0x182568000 + 37364
-4   CFNetwork                           0x00000001820722a4 0x181fd4000 + 647844
-5   Foundation                          0x0000000183586308 0x183490000 + 1008392
-6   libsystem_pthread.dylib             0x0000000193e97dc8 0x193e94000 + 15816
-7   libsystem_pthread.dylib             0x0000000193e97d24 0x193e94000 + 15652
-8   libsystem_pthread.dylib             0x0000000193e94ef8 0x193e94000 + 3832
+0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
+1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
 
 Thread 3:
-0   libsystem_kernel.dylib              0x0000000193dfb498 0x193de0000 + 111768
-1   libsystem_pthread.dylib             0x0000000193e97dc8 0x193e94000 + 15816
-2   libsystem_pthread.dylib             0x0000000193e97d24 0x193e94000 + 15652
-3   libsystem_pthread.dylib             0x0000000193e94ef8 0x193e94000 + 3832
+0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
+1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
 
 Thread 4:
 0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
 1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
 
-Thread 5:
-0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
-1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
-
-Thread 6:
-0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
-1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
-
-Thread 7:
-0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
-1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
-
-Thread 8:
-0   libsystem_kernel.dylib              0x0000000193dfbc78 0x193de0000 + 113784
-1   libsystem_pthread.dylib             0x0000000193e94ef0 0x193e94000 + 3824
-
 Thread 0 crashed with ARM-64 Thread State:
-    pc: 0x0000000193dfb270     fp: 0x000000016fd4f700     sp: 0x000000016fd4f6e0     x0: 0x0000000000000000 
+    pc: 0x0000000193dfb270     fp: 0x000000016fddf700     sp: 0x000000016fddf6e0     x0: 0x0000000000000000 
     x1: 0x0000000000000000     x2: 0x0000000000000000     x3: 0xffffffffffffffff     x4: 0x0000000000000010 
     x5: 0x0000000000000010     x6: 0x0000000000000000     x7: 0x0000000000000000     x8: 0x0000000008000000 
     x9: 0x0000000004000000    x10: 0x0000000000000000    x11: 0x0000000000000018    x12: 0x0000000000000001 
    x13: 0x0000000000062aa8    x14: 0x0000000000000015    x15: 0x0000000000000000    x16: 0x0000000000000148 
    x17: 0x0000000000000000    x18: 0x0000000000000000    x19: 0x0000000000000006    x20: 0x0000000197e53310 
-   x21: 0x00000001943033f0    x22: 0x000000012760bdf0    x23: 0x00000001942fbc80    x24: 0x0000000197e3a0a8 
-   x25: 0x00000001700a5c40    x26: 0x0000000187690f35    x27: 0x00000001828a8aaf    x28: 0x000000016fd4f784 
+   x21: 0x00000001943033f0    x22: 0x000000012d506360    x23: 0x00000001942fbc80    x24: 0x0000000197e3a0a8 
+   x25: 0x00000001702a9a80    x26: 0x0000000187690f35    x27: 0x00000001828a8aaf    x28: 0x000000016fddf784 
     lr: 0x0000000193e99170   cpsr: 0x0000000000000000 
 
 Binary Images:
-       0x1000b0000 -        0x1000d7fff +MyCrashingApp arm64  <9a1607121f1138df82a86e3ca22448cf> /private/var/mobile/Containers/Bundle/Application/3763F5C9-3E9C-43CB-84FF-02F865648411/MyCrashingApp.app/MyCrashingApp
+       0x100020000 -        0x100047fff +MyCrashingApp arm64  <2f25047feb533f16a0b85833579240aa> /private/var/mobile/Containers/Bundle/Application/A109198D-ABD1-4DC6-96ED-815E672FC3CC/MyCrashingApp.app/MyCrashingApp
        0x1809dc000 -        0x1809e5fff  AccessibilitySettingsLoader arm64  <a3be5272f6c9327fad9fcece3076c7c7> /System/Library/AccessibilityBundles/AccessibilitySettingsLoader.bundle/AccessibilitySettingsLoader
        0x180e68000 -        0x180ffbfff  AVFoundation arm64  <a0028621d1c030c18134b4d5ef0f4dd9> /System/Library/Frameworks/AVFoundation.framework/AVFoundation
        0x180ffc000 -        0x181060fff  libAVFAudio.dylib arm64  <39796038cde83934a6b610acf7d390e5> /System/Library/Frameworks/AVFoundation.framework/libAVFAudio.dylib
@@ -182,7 +157,6 @@ Binary Images:
        0x1896c8000 -        0x1896eefff  CoreDuet arm64  <d9f9cb6c31fb361fb5021a5f0f4586b3> /System/Library/PrivateFrameworks/CoreDuet.framework/CoreDuet
        0x1896f8000 -        0x18970bfff  CoreDuetDaemonProtocol arm64  <a2de0737796f3614bca9004bed4ed5f3> /System/Library/PrivateFrameworks/CoreDuetDaemonProtocol.framework/CoreDuetDaemonProtocol
        0x189714000 -        0x189716fff  CoreDuetDebugLogging arm64  <5044815f2a1b3219b09083b63e2c4a0a> /System/Library/PrivateFrameworks/CoreDuetDebugLogging.framework/CoreDuetDebugLogging
-       0x189b90000 -        0x189bb4fff  CoreServicesInternal arm64  <c2b227a762bd366ca1c5b22823059085> /System/Library/PrivateFrameworks/CoreServicesInternal.framework/CoreServicesInternal
        0x189d44000 -        0x189dc2fff  CoreSymbolication arm64  <bf42bbb9a1f2385f84027907f6767ee1> /System/Library/PrivateFrameworks/CoreSymbolication.framework/CoreSymbolication
        0x189e18000 -        0x189eaafff  CoreUI arm64  <a8851f39a69d31f4952fca8c94f723f2> /System/Library/PrivateFrameworks/CoreUI.framework/CoreUI
        0x189eac000 -        0x189f28fff  CoreUtils arm64  <87cfa6e71bf934248ca4aea975951a4d> /System/Library/PrivateFrameworks/CoreUtils.framework/CoreUtils

@@ -54,7 +54,7 @@
 					<td align="right">
 						<?php echo $version->datestring; ?> &nbsp;|&nbsp;
 						<a href="?a=releasenotes&v=<?php echo $version->uuid; ?>">Notes</a> &nbsp;|&nbsp;
-						<a class="delete" href="?a=delversion&filter=<?php echo $this->filter; ?>&v=<?php echo $version->uuid;?>" onclick="return confirmDelete();">Delete</a>
+						<a class="delete" href="?a=delversion&filter=<?php echo $this->filter; ?>&v=<?php echo $version->uuid;?>" onclick="return confirmDelete();">DEL</a>
 					</td>
 					</tr></table>
 				</div>
@@ -74,36 +74,34 @@
 		<div class="sectionHeader">
 			<a href="?a=onlycrashes">Crash Logs</a>
 		</div>
-		<?php if( count($this->crashGroups) > 0) { ?>
-			<?php foreach($this->crashGroups as $group) {?>
-				<div class="sectionRow groupTitle">
-					<table cellspacing="0" cellspacing="0"><tr>
-					<td>
-						<a href="?a=onlycrashes&v=<?php echo $group->groupLabel; ?>">
-							<span class="groupTitleText">Version <?php echo $group->groupLabel; ?></span>
-						</a>
-					</td>
-					<td align="right"><span class="groupTitleLinks"><a href="">Download all</a></span></td>
-					</tr></table>
+			<?php if(count($this->crashes) < 1) { ?>
+				<div class="sectionRow">
+					No Crashes, yay!
 				</div>
-				<?php foreach($group->crashes as $crash) {?>
-					<div class="sectionGroupRow">
-						<table cellpadding="0" cellspacing="0"><tr>
-						<td class="sectionRowTitle">
-							<a href="<?php echo $crash->getCrashFileURL() ; ?>"><?php echo substr($crash->name,0,18); ?></a>
-						</td>
-						<td align="right">
-							<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
-							<a class="delete" href="?a=delcrash&filter=<?php echo $this->filter; ?>&c=<?php echo $crash->name?>&v=<?php echo $group->groupLabel; ?>" onclick="return confirmDelete();">Delete</a>
-						</td></tr></table>
-					</div>
-				<?php } ?>
 			<?php } ?>
-		<?php } else { ?>
-			<div class="sectionRow">
-				No crash logs
-			</div>
-		<?php } ?>
+			<?php foreach($this->crashes as $crash) {?>
+				<div class="sectionRow">
+					<table cellpadding="0" cellspacing="0"><tr>
+					<td class="sectionRowTitle">
+						<span class="crashVersion">
+							V<?php echo $crash->version; ?>
+						</span>
+						&nbsp;
+						<a href="<?php echo $crash->getCrashFileURL() ; ?>"><?php echo substr($crash->name,0,13); ?></a>
+					</td>
+					<td>
+						<?php echo $crash->hardwareModel; ?>
+					</td>
+					<td>
+						<?php echo $crash->osversion; ?>
+					</td>
+					<td align="right">
+						<?php echo $crash->datestring; ?> &nbsp;|&nbsp;
+						<a class="delete" href="?a=delcrash&filter=<?php echo $this->filter; ?>&c=<?php echo $crash->name?>"
+							onclick="return confirmDelete();">DEL</a>
+					</td></tr></table>
+				</div>
+			<?php } ?>
 	</div>
 	<?php } ?>
 	
@@ -114,10 +112,23 @@
 			<a href="?a=onlydevices">Devices</a>
 		</div>
 		<div class="sectionMenu">
-			<a href="">Export Devices</a> &nbsp;|&nbsp; <a href="">Add A Device</a>
+			<a href="">Export Devices</a>
 		</div>
+		<?php foreach($this->devices as $device) { ?>
 		<div class="sectionRow">
+			<table cellspacing="0" cellspacing="0"><tr>
+				<td class="device">
+					<strong><?php echo $device->udid; ?> </strong>
+				</td>
+				<td>
+					(<?php echo $device->model; ?>)
+				</td>
+				<td align="right">
+					<?php echo $device->user->firstname; ?> <?php echo $device->user->lastname; ?>
+				</td>
+			</tr></table>
 		</div>
+		<?php } ?>
 	</div>
 	<?php } ?>
 	

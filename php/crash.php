@@ -7,32 +7,24 @@ class Crash {
 	var $uuid;
 	var $name;
 	var $version;
+	var $osversion;
+	var $hardwareModel;
 	var $data;
 	var $date;
 	var $datestring;
 	
-	function saveCrash($data) {
-
-	}
-	
-	function initWithPath($path) {
-		$this->name = basename($path);
-		$this->date = filemtime($path);
-		$this->datestring = date("m/d/Y",$this->date);
-	}
-
 	static function GetCrash($uuid) {
 		$utils = SoccerUtils::getInstance();
 		$crash = new Crash();
 		$crash->uuid = $uuid;
-		$crash->name = $uuid; // . ".txt";
-		$crash->date = filemtime($path);
+		$crash->name = $uuid . ".txt";
+		$crash->date = filemtime( $utils->joinPaths(array($utils->crashPath,$crash->name)));
 		$crash->datestring = date("m/d/Y",$crash->date);
 		$crashFile = $utils->rsearch($utils->crashPath,$crash->name);
-		//var_dump($crashFile);
-		$crashContent = $utils->readLines($crashFile,10);
-		$crash->version = Crash::GetVersionFromIOSCrash($crashContent);
-		//echo $crash->version;
+		$header = $utils->readLinesAsArray($crashFile,16);
+		$crash->osversion = Crash::GetOSVersionFromIOSCrashHeader($header);
+		$crash->hardwareModel = Crash::GetHardwareModelFromIOSCrashHeader($header);
+		$crash->version = Crash::GetVersionFromIOSCrash($header);
 		return $crash;
 	}
 
@@ -42,22 +34,44 @@ class Crash {
 		$crash->uuid = $utils->uuid();
 		$crash->name = $crash->uuid . ".txt";
 		$crash->data = $data;
-		$crash->version = Crash::GetVersionFromIOSCrash($data);
+		$header = explode("\n",$data);
+		$header = array_slice($header,0,30);
+		$crash->version = Crash::GetVersionFromIOSCrash($header);
+		$crash->hardwareModel = Crash::GetHardwareModelFromIOSCrashHeader($header);
+		$crash->osversion = Crash::GetOSVersionFromIOSCrashHeader($header);
 		return $crash;
 	}
 
-	static function GetVersionFromIOSCrash($data) {
-		$matches = array();
-		preg_match('/Version:\s+([0-9])+\n/',$data,$matches);
-		if(count($matches) > 0) {
-			return $matches[1];
+	static function GetAllCrashes() {
+		$utils = SoccerUtils::getInstance();
+		$logs = $utils->getFilesAtPath($utils->crashPath,array("txt"));
+		$crashes = array();
+		foreach($logs as $log) {
+			$uuid = preg_replace('/\.txt/',"",$log);
+			$crash = Crash::GetCrash($uuid);
+			array_push($crashes,$crash);
 		}
-		return "Unknown";
+		usort($crashes,array("SoccerUtils","sortDescendingByDate"));
+		return $crashes;
+	}
+
+	static function GetOSVersionFromIOSCrashHeader($header) {
+		$osline = $header[11];
+		return substr($osline,17);
+	}
+
+	static function GetHardwareModelFromIOSCrashHeader($header) {
+		$hwl = $header[2];
+		return substr($hwl,17);
+	}
+
+	static function GetVersionFromIOSCrash($header) {	
+		return substr($header[6],17);
 	}
 
 	function save() {
 		$utils = SoccerUtils::getInstance();
-		$path = $utils->joinPaths(array($utils->crashPath,$this->version,$this->name));
+		$path = $utils->joinPaths(array($utils->crashPath,$this->name));
 		if(!$this->data) {
 			error_log("Error saving crash, no data found.");
 			return;
@@ -67,7 +81,7 @@ class Crash {
 
 	function delete() {
 		$utils = SoccerUtils::getInstance();
-		$path = $utils->joinPaths(array($utils->crashPath,$this->version,$this->name));
+		$path = $utils->joinPaths(array($utils->crashPath,$this->name));
 		if(file_exists($path)) {
 			unlink($path);
 		}
@@ -75,12 +89,12 @@ class Crash {
 
 	function getCrashFilePath() {
 		$utils = SoccerUtils::getInstance();
-		return $inst->joinPaths(array($utils->crashPath,$this->version,$this->name));
+		return $inst->joinPaths(array($utils->crashPath,$this->name));
 	}
 
 	function getCrashFileURL() {
 		$utils = SoccerUtils::getInstance();
-		return $utils->joinPaths(array($utils->baseURL,"crash",$this->version,$this->name));
+		return $utils->joinPaths(array($utils->baseURL,"crash",$this->name));
 	}
 
 	function getCrashLog() {
