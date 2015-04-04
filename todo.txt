@@ -1,3 +1,5 @@
+
+-add DeleteCrash and DeleteAppVersion, instead of loading the entire object the file can just be delete
 -make sure only unique device udid's are registered - change the saved device files udid.json
 -add appType to appdata - mac/ios only for now.
 -column headers in sections

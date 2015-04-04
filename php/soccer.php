@@ -279,15 +279,12 @@ class Soccer {
 	/** delete a crash **/
 	
 	function deleteCrash() {
-		$crash = Crash::GetCrash($this->config->getRequestVar("c"));
-		//$version = $this->config->getRequestVar("v");
+		Crash::DeleteCrashFile($this->config->getRequestVar("c"));
 		$filter = $this->config->getRequestVar("filter");
-		//$path = $this->joinPaths(array($this->config->crashPath,$version,$crash));
-		$crash->delete();
-		//if(file_exists($path)) {
-		//	unlink($path);
-		//}
 		$redir = $this->config->dashboardURL;
+		if($filter) {
+			$redit .= '?a=' . $filter;
+		}
 		header("Location: " . $redir);
 	}
 

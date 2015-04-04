@@ -42,6 +42,26 @@ class Crash {
 		return $crash;
 	}
 
+	static function DeleteCrash($uuid) {
+		$utils = SoccerUtils::getInstance();
+		$path = $utils->joinPaths(array($utils->crashPath,$uuid.'.txt'));
+		if(file_exists($path)) {
+			unlink($path);
+		}
+	}
+
+	static function DeleteCrashFile($filename) {
+		$utils = SoccerUtils::getInstance();
+		$path = $utils->joinPaths(array($utils->crashPath,$filename));
+		if(file_exists($path)) {
+			unlink($path);
+		}	
+	}
+
+	static function UUIDFromFilename($filename) {
+		return preg_replace('/\.txt/',"",$filename);
+	}
+
 	static function GetAllCrashes() {
 		$utils = SoccerUtils::getInstance();
 		$logs = $utils->getFilesAtPath($utils->crashPath,array("txt"));
