@@ -20,6 +20,12 @@ form {margin:0; padding:0;}
 	margin-bottom:20px;
 }
 
+.mobileContent {
+	margin:0;
+	padding:0;
+	margin-bottom:20px;	
+}
+
 /************************************ SECTION **/
 
 .section {
@@ -97,10 +103,6 @@ form {margin:0; padding:0;}
 	font-size:12px;
 }
 
-.sectionRow td.device {
-	//font-size:10px;
-}
-
 .sectionRow .crashVersion {
 	display:inline-block;
 	background-color:#D87A46;
@@ -144,6 +146,16 @@ form {margin:0; padding:0;}
 	padding-top:14px;
 }
 
+
+.sectionFooter {
+	background-color:white;
+	font-size:10px;
+	padding:8px;
+	padding-left:20px;
+	padding-right:20px;
+	border-bottom:solid 1px #CCC;
+}
+
 /***************************************** RELEASE NOTES STYLES FOR MARKUP **/
 
 .releaseNotes ul {
@@ -156,6 +168,10 @@ form {margin:0; padding:0;}
 	margin:0;
 	padding:0;
 	margin-bottom:4px;
+}
+
+.releaseNotesDate {
+	font-style:italic;
 }
 
 /***************************************** FOOTER **/

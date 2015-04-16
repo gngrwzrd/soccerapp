@@ -40,7 +40,7 @@
 			<div class="sectionMenu">
 				Before registering your device, we ask that you enter your name and email so we're able to see who's using <?php echo $this->applicationName; ?>.
 			</div>
-			<form method="POST" action="<?php echo $this->formActionURL; ?>">
+			<form method="POST" action="<?php echo $this->formActionURL; ?>" id="newUserForm">
 				<div class="sectionRow sectionRowForm">
 					<table cellspacing="0" cellpadding="0"><tr>
 					<td class="label"><label for="firstName">First Name:</label></td>
@@ -60,14 +60,14 @@
 					</tr></table>
 				</div>
 				<div class="sectionRow sectionRowForm">
-					<input type="submit" class="button black" value="Continue" />
+					<input type="button" class="button black" style="width:100%" value="Continue"
+					onclick="validateNewUserAndSubmit()" />
 				</div>
 			</form>
 		<?php if(!$this->debug) { ?>
 		</div>
 		<?php } ?>
 	</div>
-
 </div>
 </body>
 </html>

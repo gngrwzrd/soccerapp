@@ -12,15 +12,15 @@ class SoccerUtils {
 	var $registeredURL;
 	var $appDataPath;
 	var $appData;
+
 	var $crashPath;
 	var $usersPath;
 	var $versionsPath;
 	var $devicesPath;
-	
-	var $userSessionVar;
-	var $maxCrashGroups;
-	var $maxCrashesInGroup;
+	var $statsPath;
 
+	var $userSessionVar;
+	
 	static function getInstance() {
 		static $instance = NULL;
 		if($instance == NULL) {
@@ -30,18 +30,12 @@ class SoccerUtils {
 	}
 
 	protected function __construct() {
-		$this->userSessionVar = "user_uuid";
-		$this->maxCrashGroups = 5;
-		$this->maxCrashesInGroup = 10;
-
 		$this->basePath = realpath(dirname(__FILE__) . '/..');
-		
 		if(isset($_SERVER['HTTPS'])) {
 			$this->baseURL = 'https://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		} else {
 			$this->baseURL = 'http://' . $_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']);
 		}
-		
 		$this->baseURL = rtrim($this->baseURL,'/');
 		$this->dashboardURL = $this->joinPaths(array($this->baseURL,"dashboard.php"));
 		$this->versionsURL = $this->joinPaths(array($this->baseURL,"versions"));
@@ -50,8 +44,10 @@ class SoccerUtils {
 		$this->versionsPath = $this->joinPaths(array($this->basePath,"versions"));
 		$this->usersPath = $this->joinPaths(array($this->basePath,"users"));
 		$this->devicesPath = $this->joinPaths(array($this->basePath,"devices"));
+		$this->statsPath = $this->joinPaths(array($this->basePath,"stats"));
 		$this->appDataPath = $this->joinPaths(array($this->basePath,"app.json"));
 		$this->appData = json_decode($this->readFileContent($this->appDataPath));
+		$this->userSessionVar = "user_uuid";
 
 		if(!file_exists($this->crashPath)) {
 			if(!mkdir($this->crashPath)) {

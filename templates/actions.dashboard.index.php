@@ -27,11 +27,11 @@
 		<?php if ($this->filter && $this->filter != "") { ?>
 			<a href="<?php echo $this->dashboardLink; ?>">Dashboard</a>
 		<?php } ?>
-
 		<?php if(!$this->filter || $this->filter == "") {?>
-		<a href="<?php echo $this->recruitLink; ?>">Recruit Users</a> &nbsp;|&nbsp; <a href="<?php echo $this->installLink; ?>">Install Latest</a>
+			<a href="<?php echo $this->recruitLink; ?>">Recruit Users</a>
+			&nbsp;|&nbsp;
+			<a href="<?php echo $this->installLink; ?>">Install Latest</a>
 		<?php } ?>
-
 		&nbsp;|&nbsp; <a href="?a=faq">FAQ</a>
 	</div>
 	
@@ -81,7 +81,8 @@
 			<?php } ?>
 			<?php foreach($this->crashes as $crash) {?>
 				<div class="sectionRow">
-					<table cellpadding="0" cellspacing="0"><tr>
+					<table cellpadding="0" cellspacing="0">
+					<tr>
 					<td class="sectionRowTitle">
 						<span class="crashVersion">
 							V<?php echo $crash->version; ?>
@@ -112,19 +113,23 @@
 			<a href="?a=onlydevices">Devices</a>
 		</div>
 		<div class="sectionMenu">
-			<a href="">Export Devices</a>
+			<a href="?a=exportalldevices">Export Devices</a>
 		</div>
 		<?php foreach($this->devices as $device) { ?>
 		<div class="sectionRow">
 			<table cellspacing="0" cellspacing="0"><tr>
-				<td class="device">
-					<strong><?php echo $device->udid; ?> </strong>
+				<td width="300" class="device">
+					<strong><?php echo $device->deviceId; ?> </strong>
 				</td>
-				<td>
+				<td width="150">
 					(<?php echo $device->model; ?>)
 				</td>
-				<td align="right">
+				<td width="200" align="right">
 					<?php echo $device->user->firstname; ?> <?php echo $device->user->lastname; ?>
+				</td>
+				<td width="50" align="right">
+					<a href="?a=deldevice&d=<?php echo $device->deviceId; ?>&filter=<?php echo $this->filter; ?>"
+					onclick="return confirmDelete();" class="delete">DEL</a>
 				</td>
 			</tr></table>
 		</div>
@@ -138,9 +143,11 @@
 		<div class="sectionHeader">
 			<a href="?a=onlystats">Statistics</a>
 		</div>
+		<?php  foreach($this->stats as $stat) { ?>
 		<div class="sectionRow">
-
+			<?php echo $stat->getDashboardMessage(); ?>
 		</div>
+		<?php } ?>
 	</div>
 	<?php } ?>
 </div>

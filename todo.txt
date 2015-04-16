@@ -1,10 +1,4 @@
-
--add DeleteCrash and DeleteAppVersion, instead of loading the entire object the file can just be delete
--make sure only unique device udid's are registered - change the saved device files udid.json
--add appType to appdata - mac/ios only for now.
+-add date to install / release notes page
 -column headers in sections
--mac/ios support.
--change handleIOSCrash to handleIOSOrMacCrash();
 -device logging
 -csrf - validate referrer
--export devices

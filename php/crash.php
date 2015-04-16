@@ -1,6 +1,7 @@
 <?php
 
 require_once("soccer.utils.php");
+require_once("PHPMailer/PHPMailerAutoload.php");
 
 class Crash {
 	
@@ -61,7 +62,7 @@ class Crash {
 	static function UUIDFromFilename($filename) {
 		return preg_replace('/\.txt/',"",$filename);
 	}
-
+	
 	static function GetAllCrashes() {
 		$utils = SoccerUtils::getInstance();
 		$logs = $utils->getFilesAtPath($utils->crashPath,array("txt"));
@@ -106,7 +107,7 @@ class Crash {
 			unlink($path);
 		}
 	}
-
+	
 	function getCrashFilePath() {
 		$utils = SoccerUtils::getInstance();
 		return $inst->joinPaths(array($utils->crashPath,$this->name));
@@ -125,6 +126,37 @@ class Crash {
 		$path = $this->getCrashFilePath();
 		$content = $inst->readFileContent($path);
 		return $content;
+	}
+	
+	function sendToEmail() {
+		$utils = SoccerUtils::getInstance();
+		$crashHeader = $utils->readLinesAsArray($this->getCrashFilePath(),16);
+		
+		$mailer = new PHPMailer();
+		$mailer->isSMTP();
+		$mailer->Host = "smtp.gmail.com";
+		$mailer->SMTPAuth = true;
+		$mailer->SMTPSecure = 'tls';
+		$mailer->Port = 587;
+		
+		//configure here.
+		$mailer->Username = 'gngrwzrd@gmail.com';
+		$mailer->Password = '';
+		$mailer->From = 'gngrwzrd@gmail.com';
+		$mailer->FromName = 'Aaron Smith';
+		$mailer->addAddress('gngrwzrd@gmail.com','Aaron Smith');
+		$mailer->addReplyTo('gngrwzrd@gmail.com','Aaron Smith');
+		$mailer->isHTML(TRUE);
+		
+		//standard email
+		$mailer->Body = $bundle . "<br/>CFBundleVersion: " . $this->version . "<br/>" . $lines[11] . "<br/>" . $lines[10] . "<br/>";
+		$mailer->AltBody = $bundle . "<br/>CFBundleVersion: " . $this->version . "<br/>" . $lines[11] . "<br/>" . $lines[10] . "<br/>";
+		$mailer->Subject = "New Crash";
+		$mailer->addAttachment($file);
+
+		if(!$mailer->send()) {
+			error_log("Can't sent mail!");
+		}
 	}
 }
 

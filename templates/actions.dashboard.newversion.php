@@ -26,7 +26,7 @@
 	<div class="sectionMenu">
 		<a href="<?php echo $_SERVER['PHP_SELF']; ?>">Dashboard</a>
 	</div>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" id="newVersionForm">
 		<input type="hidden" name="a" value="submitnewversion" />
 		<div class="section">
 			<div class="sectionHeader">
@@ -37,7 +37,15 @@
 				<td class="label"><label for="executable">Executable:</label></td>
 				<td>
 					<input type="file" name="executable" id="executable" /><br/><br/>
-					<strong>(IPA, APK, DMG, ZIP)</strong>
+					<strong>
+						<?php if($this->appType == 'ios') {
+							echo "(IPA)";
+						}?>
+
+						<?php if($this->appType == "mac") {
+							echo "(DMG, ZIP, APP)";
+						}?>
+					</strong>
 				</td>
 				</tr></table>
 			</div>
@@ -55,7 +63,7 @@
 				</tr></table>
 			</div>
 			<div class="sectionRow sectionRowForm center">
-				<input type="submit" class="button black" />
+				<input type="button" value="Submit" style="width:100%" class="button black" onclick="validateNewVersionAndSubmit();" />
 			</div>
 		</div>
 	</form>

@@ -6,68 +6,38 @@ class Device {
 
 	var $uuid;
 	var $user;
-	var $udid;
+	var $deviceId;
 	var $model;
 
-	//{udid,device,model,firstname,lastname,email,exported}
-
-	static function ExportAllDevices() {
-		/*$devices = $this->util->joinPaths(array($this->config->basePath,"devices.txt"));
-		
-		if(!file_exists($devices)) {
-			$handle = fopen($devices,"w");
-			fwrite($handle,"deviceIdentifier\tdeviceName\n");
-			fclose($handle);
-		}
-		
-		$size = filesize($devices);
-		$handle = fopen($devices,"r+");
-		$write = TRUE;
-		
-		while(($line=fgets($handle))) {
-			if(preg_match('/'.$device.'/',$line)) {
-				$write = FALSE;
-			}
-		}
-		
-		if($write) {
-			$line = $device . "\t" . $model . "\n";
-			fseek($handle,$size);
-			fwrite($handle,$line);
-		}
-		
-		fclose($handle);*/
-	}
-
-	static function GetDevice($uuid) {
-		$utils = SoccerUtils::getInstance();
-		$path = $utils->joinPaths(array($utils->devicesPath,$uuid.".json"));
-		$data = json_decode($utils->readFileContent($path));
+	static function NewMacDevice($user,$hardwareId,$model) {
 		$device = new Device();
-		$device->uuid = $uuid;
-		$device->udid = $data->udid;
-		$device->model = $data->model;
-		$device->user = new User();
-		$device->user->firstname = $data->firstname;
-		$device->user->lastname = $data->lastname;
-		$device->user->email = $data->email;
+		$device->uuid = $hardwareId;
+		$device->user = $user;
+		$device->deviceId = $hardwareId;
+		$device->model = $model;
 		return $device;
-	}
-
-	static function GetDeviceAtPath($path) {
-		$filename = basename($path);
-		$uuid = preg_replace('/\.json/',"",$filename);
-		return Device::GetDevice($uuid);
 	}
 
 	static function NewDevice($user,$data) {
+		$udid = Device::GetIOSDeviceUDIDFromData($data);
+		if(Device::HasDevice($udid)) {
+			return;
+		}
 		$utils = SoccerUtils::getInstance();
 		$device = new Device();
-		$device->uuid = $utils->uuid();
+		$device->uuid = $udid;
 		$device->user = $user;
-		$device->udid = Device::GetIOSDeviceUDIDFromData($data);
+		$device->deviceId = $udid;
 		$device->model = Device::GetIOSDeviceModelFromData($data);
 		return $device;
+	}
+
+	static function DeleteDevice($deviceId) {
+		$utils = SoccerUtils::getInstance();
+		$path = $utils->joinPaths(array($utils->devicesPath,$deviceId.'.json'));
+		if(file_exists($path)) {
+			unlink($path);
+		}
 	}
 
 	static function GetAllDevices() {
@@ -79,6 +49,47 @@ class Device {
 			array_push($result,$d);
 		}
 		return $result;
+	}
+
+	static function GetDevice($uuid) {
+		$utils = SoccerUtils::getInstance();
+		$path = $utils->joinPaths(array($utils->devicesPath,$uuid.".json"));
+		$data = json_decode($utils->readFileContent($path));
+		$device = new Device();
+		$device->uuid = $uuid;
+		$device->deviceId = $data->deviceId;
+		$device->model = $data->model;
+		$device->user = new User();
+		$device->user->firstname = $data->firstname;
+		$device->user->lastname = $data->lastname;
+		$device->user->email = $data->email;
+		return $device;
+	}
+
+	static function HasDevice($uuid) {
+		$utils = SoccerUtils::getInstance();
+		$path = $utils->joinPaths(array($utils->devicesPath,$uuid.'.json'));
+		if(file_exists($path)) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
+	static function GetDeviceAtPath($path) {
+		$filename = basename($path);
+		$uuid = preg_replace('/\.json/',"",$filename);
+		return Device::GetDevice($uuid);
+	}
+	
+	static function GetExportAllDevices() {
+		$devices = Device::GetAllDevices();
+		$devicesOutput = "deviceIdentifier\tdeviceName\n";
+		foreach($devices as $device) {
+			$name = $device->user->firstname . ' ' . $device->user->lastname;
+			$name .= ' ' . $device->model;
+			$devicesOutput .= $device->deviceId . "\t" . $name . "\n";
+		}
+		return $devicesOutput;
 	}
 
 	static function GetIOSDeviceUDIDFromData($data) {
@@ -117,8 +128,9 @@ class Device {
 	function save() {
 		$utils = SoccerUtils::getInstance();
 		$path = $utils->joinPaths(array($utils->devicesPath,$this->uuid . ".json"));
+		error_log("Device.save " . $path);
 		$data = array(
-			"udid" => $this->udid,
+			"deviceId" => $this->deviceId,
 			"model" => $this->model,
 			"firstname" => $this->user->firstname,
 			"lastname" => $this->user->lastname,

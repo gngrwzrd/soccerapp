@@ -5,11 +5,12 @@ require_once("soccer.utils.php");
 
 class User {
 	
+	//vars for all users.
 	var $uuid;
 	var $firstname;
 	var $lastname;
 	var $email;
-	
+
 	static function NewUser($firstname,$lastname,$email) {
 		$utils = SoccerUtils::getInstance();
 		$user = new User();

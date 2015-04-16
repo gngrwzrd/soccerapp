@@ -16,7 +16,7 @@ class AppVersion {
 	var $tmpFilePath;
 	
 	const MAX_VERSIONS = 10;
-
+	
 	static function NewAppVersionFromSubmission() {
 		$utils = SoccerUtils::getInstance();
 		$file = $_FILES['executable'];
@@ -72,7 +72,7 @@ class AppVersion {
 		return $av;
 	}
 
-	static function GetAllAppVersions() {
+	static function GetAllAppVersions($count=-1) {
 		$utils = SoccerUtils::getInstance();
 		$path = $utils->versionsPath;
 		if(!file_exists($path)) {
@@ -80,26 +80,36 @@ class AppVersion {
 		}
 		$rawfiles = scandir($path);
 		$allVersions = array();
-		$count = 0;
 		foreach($rawfiles as $uuid) {
 			if($uuid == ".." || $uuid == ".") {
 				continue;
-			}
-			if($count == AppVersion::MAX_VERSIONS) {
-				break;
 			}
 			$uuidPath = $utils->joinPaths(array($path,$uuid));
 			if(is_dir($uuidPath)) {
 				$av = AppVersion::GetAppVersion($uuid);
 				if($av) {
 					array_push($allVersions,$av);
-					$count++;
 				}
 			}
 		}
 		usort($allVersions,array("SoccerUtils","sortDescendingByDate"));
-		//usort($allVersions,array("SoccerUtils","sortDescendingByName"));
+		if($count > -1) {
+			return array_splice($allVersions,0,$count);
+		}
 		return $allVersions;
+	}
+
+	static function DeleteAppVersion($uuid) {
+		$utils = SoccerUtils::getInstance();
+		$path = $utils->joinPaths(array($utils->versionsPath,$uuid));
+		if(file_exists($path)) {
+			$utils->rrmdir($path);
+		}
+	}
+
+	static function GetLatestVersion() {
+		$versions = AppVersion::GetAllAppVersions();
+		return $versions[0];
 	}
 
 	function getReleaseNotes() {
@@ -135,7 +145,7 @@ class AppVersion {
 
 		return TRUE;
 	}
-
+	
 	function delete() {
 		$utils = SoccerUtils::getInstance();
 		$path = $utils->joinPaths(array($utils->versionsPath,$this->uuid));
@@ -143,7 +153,7 @@ class AppVersion {
 			$utils->rrmdir($path);
 		}
 	}
-
+	
 	function getIOSInstallPlist($icon) {
 		$utils = SoccerUtils::getInstance();
 		$icon = $utils->joinPaths(array($utils->baseURL,"assets","icon.png"));
@@ -153,10 +163,10 @@ class AppVersion {
 		$result = $savant->fetch("templates/template.app.plist.php");
 		return $result;
 	}
-
+	
 	function getApplicationURL() {
 		$utils = SoccerUtils::getInstance();
-		return $utils->joinPaths(array($utils->versionsURL,$this->uuid,$this->name));
+		return $utils->joinPaths(array($utils->versionsURL,$this->uuid,$this->name.'.'.$this->extension));
 	}
 }
 
